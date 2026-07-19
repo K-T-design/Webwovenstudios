@@ -1,4 +1,4 @@
-import { $, $$ } from '../utils/dom.js';
+import { $, $$, sanitizeHTML, sanitizeURL, sanitizeImageURL } from '../utils/dom.js';
 import { appState } from '../config/state.js';
 import { SOCIAL_PLATFORMS } from '../config/constants.js';
 
@@ -24,15 +24,16 @@ export class PreviewEngine {
     // Apply accent color as inline custom property
     this.container.style.setProperty('--card-accent', state.accentColor);
 
-    // Update Text Content
+    // Update Text Content (textContent is inherently safe)
     $('#cardName').textContent = state.name || 'Your Name';
     $('#cardJobTitle').textContent = state.jobTitle || 'Job Title';
     $('#cardCompany').textContent = state.company || 'Company';
     
-    // Update Image
+    // Update Image (validate URL scheme)
     const avatarImg = $('#cardAvatarImg');
     if (avatarImg) {
-      avatarImg.src = state.imageUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=fallback';
+      const safeImage = sanitizeImageURL(state.imageUrl);
+      avatarImg.src = safeImage || 'https://api.dicebear.com/7.x/avataaars/svg?seed=fallback';
     }
 
     // Update Contact Info
@@ -40,15 +41,17 @@ export class PreviewEngine {
     contactContainer.innerHTML = '';
     
     if (state.email) {
+      const safeEmail = sanitizeURL(`mailto:${state.email}`);
       contactContainer.innerHTML += `
-        <a href="mailto:${state.email}" class="contact-item">
-          <i>✉</i> <span>${state.email}</span>
+        <a href="${safeEmail}" class="contact-item">
+          <i>✉</i> <span>${sanitizeHTML(state.email)}</span>
         </a>`;
     }
     if (state.phone) {
+      const safePhone = sanitizeURL(`tel:${state.phone}`);
       contactContainer.innerHTML += `
-        <a href="tel:${state.phone}" class="contact-item">
-          <i>☏</i> <span>${state.phone}</span>
+        <a href="${safePhone}" class="contact-item">
+          <i>☏</i> <span>${sanitizeHTML(state.phone)}</span>
         </a>`;
     }
 
@@ -58,9 +61,11 @@ export class PreviewEngine {
     
     state.socialLinks.forEach(link => {
       if (link.enabled && link.url) {
+        const safeUrl = sanitizeURL(link.url);
+        if (!safeUrl) return; // skip unsafe URLs
         const platform = SOCIAL_PLATFORMS.find(p => p.id === link.platform) || SOCIAL_PLATFORMS.find(p => p.id === 'custom');
         socialContainer.innerHTML += `
-          <a href="${link.url}" target="_blank" class="social-item" title="${platform.name}">
+          <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="social-item" title="${sanitizeHTML(platform.name)}">
             ${platform.icon}
           </a>`;
       }

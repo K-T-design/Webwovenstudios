@@ -1,4 +1,4 @@
-import { $, $$ } from '../utils/dom.js';
+import { $, $$, sanitizeHTML, sanitizeImageURL } from '../utils/dom.js';
 import { appState } from '../config/state.js';
 import { SOCIAL_PLATFORMS } from '../config/constants.js';
 
@@ -34,9 +34,18 @@ export class MultiStepForm {
     $('#imageUpload')?.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
+        // Validate file type and size
+        const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+        if (!file.type.startsWith('image/') || file.size > MAX_SIZE) {
+          e.target.value = '';
+          return;
+        }
         const reader = new FileReader();
         reader.onload = (ev) => {
-          appState.update({ imageUrl: ev.target.result });
+          const result = ev.target.result;
+          if (typeof result === 'string' && result.startsWith('data:image/')) {
+            appState.update({ imageUrl: result });
+          }
           const urlInput = $('#imageUrl');
           if (urlInput) urlInput.value = ''; // clear url input if file uploaded
         };
@@ -127,7 +136,7 @@ export class MultiStepForm {
         </div>
         <input type="url" class="form-control social-url-input" 
                placeholder="https://..." 
-               value="${link.url}" 
+               value="${sanitizeHTML(link.url)}" 
                data-index="${index}"
                id="social-url-${index}">
       `;

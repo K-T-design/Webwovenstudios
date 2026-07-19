@@ -1,6 +1,14 @@
 export const generateStandaloneHTML = (cardElement, state) => {
   // Clone the card to avoid modifying the actual DOM
   const clone = cardElement.cloneNode(true);
+
+  // Escape user-controlled values used in document head/attributes
+  const escapeHTML = (str) => String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
   
   // Extract applied inline styles and data attributes for the standalone version
   const accentColor = state.accentColor;
@@ -10,7 +18,7 @@ export const generateStandaloneHTML = (cardElement, state) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${state.name} - Profile Card</title>
+  <title>${escapeHTML(state.name)} - Profile Card</title>
   <style>
     /* Base reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }

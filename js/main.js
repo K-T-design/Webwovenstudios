@@ -110,10 +110,26 @@ class App {
     $('#imageUpload')?.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (file) {
+        // Validate file type and size for security/performance
+        const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+        if (!file.type.startsWith('image/')) {
+          this.showNotification('❌ Please select a valid image file.', 'error');
+          e.target.value = '';
+          return;
+        }
+        if (file.size > MAX_SIZE) {
+          this.showNotification('❌ Image must be smaller than 5MB.', 'error');
+          e.target.value = '';
+          return;
+        }
+
         const reader = new FileReader();
         reader.onload = async (event) => {
           const base64Data = event.target.result;
-          appState.update({ imageUrl: base64Data });
+          // Sanitize the data URL scheme before storing
+          if (typeof base64Data === 'string' && base64Data.startsWith('data:image/')) {
+            appState.update({ imageUrl: base64Data });
+          }
           
           try {
             const result = await BackendService.uploadImage(base64Data, file.name);

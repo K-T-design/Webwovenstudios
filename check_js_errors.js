@@ -2,7 +2,7 @@ const { JSDOM } = require('jsdom');
 const fs = require('fs');
 const path = require('path');
 
-const html = fs.readFileSync(path.resolve(__dirname, 'Profilecard.html'), 'utf8');
+const html = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf8');
 
 // Capture console errors
 const originalError = console.error;
@@ -15,7 +15,7 @@ console.error = (...args) => {
 const dom = new JSDOM(html, { 
   runScripts: 'dangerously', 
   resources: 'usable',
-  url: "file://" + path.resolve(__dirname, 'Profilecard.html') 
+  url: "file://" + path.resolve(__dirname, 'index.html') 
 });
 const { window } = dom;
 

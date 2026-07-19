@@ -31,3 +31,39 @@ export const sanitizeHTML = (str) => {
   temp.textContent = str;
   return temp.innerHTML;
 };
+
+/**
+ * Sanitize a URL for safe use in href/src attributes.
+ * Only allows http(s), mailto, tel, and data:image schemes.
+ * Returns an empty string for anything unsafe (e.g. javascript:).
+ */
+export const sanitizeURL = (url) => {
+  if (typeof url !== 'string' || url.trim() === '') return '';
+  const trimmed = url.trim();
+
+  // Allow safe schemes
+  if (/^(https?:|mailto:|tel:|data:image\/)/i.test(trimmed)) {
+    return trimmed;
+  }
+
+  // Allow relative URLs starting with "/" or "./" or "../"
+  if (/^(\/|\.\/|\.\.\/)/.test(trimmed)) {
+    return trimmed;
+  }
+
+  // Block everything else (javascript:, vbscript:, file:, etc.)
+  return '';
+};
+
+/**
+ * Validate and sanitize an image URL specifically.
+ * Permits http(s) and data:image URLs only.
+ */
+export const sanitizeImageURL = (url) => {
+  if (typeof url !== 'string' || url.trim() === '') return '';
+  const trimmed = url.trim();
+  if (/^(https?:|data:image\/)/i.test(trimmed)) {
+    return trimmed;
+  }
+  return '';
+};

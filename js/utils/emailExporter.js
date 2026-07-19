@@ -14,7 +14,42 @@
  * @returns {string} Email-compatible HTML
  */
 export const generateEmailHTML = (profileData, format = 'gmail') => {
-  const { name, jobTitle, company, email, phone, imageUrl, socialLinks, theme, accentColor } = profileData;
+  // Sanitize all user-controlled inputs before interpolation to prevent
+  // HTML/attribute injection in the generated email signature.
+  const escapeHTML = (str) => String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+  const safeURL = (url) => {
+    if (typeof url !== 'string' || url.trim() === '') return '';
+    const u = url.trim();
+    if (/^(https?:|mailto:|tel:|data:image\/)/i.test(u)) return u.replace(/"/g, '%22');
+    return '';
+  };
+
+  const sanitizedLinks = (profileData.socialLinks || [])
+    .map(link => ({
+      ...link,
+      url: safeURL(link.url),
+      platform: String(link.platform ?? 'custom')
+    }));
+
+  const safeData = {
+    name: escapeHTML(profileData.name),
+    jobTitle: escapeHTML(profileData.jobTitle),
+    company: escapeHTML(profileData.company),
+    email: escapeHTML(profileData.email),
+    phone: escapeHTML(profileData.phone),
+    imageUrl: safeURL(profileData.imageUrl),
+    socialLinks: sanitizedLinks,
+    theme: profileData.theme,
+    accentColor: profileData.accentColor
+  };
+
+  const { name, jobTitle, company, email, phone, imageUrl, socialLinks, theme, accentColor } = safeData;
   
   const emailSafeStyles = `
     body, table, td, p, a { margin: 0; padding: 0; }
@@ -39,14 +74,14 @@ export const generateEmailHTML = (profileData, format = 'gmail') => {
   
   switch (format) {
     case 'outlook':
-      html = generateOutlookSignature(profileData);
+      html = generateOutlookSignature(safeData);
       break;
     case 'universal':
-      html = generateUniversalSignature(profileData);
+      html = generateUniversalSignature(safeData);
       break;
     case 'gmail':
     default:
-      html = generateGmailSignature(profileData);
+      html = generateGmailSignature(safeData);
       break;
   }
   
