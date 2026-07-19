@@ -1,0 +1,282 @@
+/* Profile Card Container */
+.preview-card-container {
+  perspective: 1000px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  background: var(--card-bg);
+  color: var(--card-text);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: all var(--transition-slow);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Sizes */
+.profile-card[data-size="standard"] { max-width: 400px; min-height: 500px; }
+.profile-card[data-size="compact"] { max-width: 320px; min-height: 450px; }
+.profile-card[data-size="large"] { max-width: 600px; min-height: 600px; }
+.profile-card[data-size="signature"] { 
+  max-width: 600px; 
+  min-height: auto;
+  flex-direction: row; 
+  align-items: center; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+  border: 1px solid var(--border-color); 
+}
+
+/* Card Orientations */
+.profile-card[data-orientation="vertical"] { flex-direction: column; }
+.profile-card[data-orientation="horizontal"] { flex-direction: row; }
+
+/* Themes */
+.profile-card[data-theme="light"] {
+  --card-bg: #ffffff;
+  --card-text: #1a1a1a;
+  --card-text-muted: #666666;
+  --card-surface: #f8f9fa;
+}
+
+.profile-card[data-theme="dark"] {
+  --card-bg: #121212;
+  --card-text: #ffffff;
+  --card-text-muted: #a0a0a0;
+  --card-surface: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.profile-card[data-theme="glass"] {
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-text: #1a1a1a;
+  --card-text-muted: #444444;
+  --card-surface: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-card[data-theme="dark-glass"] {
+  --card-bg: rgba(18, 18, 18, 0.7);
+  --card-text: #ffffff;
+  --card-text-muted: #cccccc;
+  --card-surface: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card Elements */
+.card-header {
+  background: linear-gradient(135deg, var(--card-accent), var(--brand-secondary));
+  height: 140px;
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.profile-card[data-orientation="horizontal"] .card-header {
+  height: auto;
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.profile-card[data-size="signature"] .card-header {
+  display: none;
+}
+
+.card-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  border: 6px solid var(--card-bg);
+  background: var(--card-surface);
+  position: absolute;
+  bottom: -60px;
+  left: 32px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all var(--transition-normal);
+}
+
+.profile-card[data-orientation="horizontal"] .card-avatar {
+  position: static;
+  margin: 32px;
+  width: 100px;
+  height: 100px;
+}
+
+.profile-card[data-alignment="center"] .card-avatar {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.profile-card:hover .card-avatar img {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 80px 32px 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-card[data-orientation="horizontal"] .card-body {
+  padding: 32px;
+}
+
+.profile-card[data-size="signature"] .card-body {
+  padding: 24px;
+}
+
+.profile-card[data-alignment="center"] .card-body {
+  text-align: center;
+}
+
+.card-name {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  color: var(--card-accent);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.card-company {
+  font-size: 0.95rem;
+  color: var(--card-text-muted);
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.card-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.profile-card[data-theme="dark"] .card-contact {
+  border-top-color: rgba(255,255,255,0.05);
+}
+
+.profile-card[data-alignment="center"] .card-contact {
+  align-items: center;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: var(--card-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.contact-item:hover {
+  color: var(--card-accent);
+}
+
+.contact-item i {
+  color: var(--card-accent);
+  width: 20px;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.card-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.profile-card[data-alignment="center"] .card-social {
+  justify-content: center;
+}
+
+.social-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--card-surface);
+  color: var(--card-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  border: 1px solid rgba(0,0,0,0.03);
+  font-size: 1.2rem;
+}
+
+.social-item:hover {
+  background: var(--card-accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Email Preview Card */
+.email-preview-card {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
+  animation: fadeIn var(--transition-normal);
+}
+
+#emailPreviewContent {
+  border: 1px dashed var(--border-color);
+  padding: 20px;
+  background: #ffffff;
+  min-height: 100px;
+  overflow-x: auto;
+}
+
+#emailPreviewContent table {
+  margin: 0 auto;
+}
+
+/* Premium Placeholder Icon Styling */
+.placeholder-icon {
+  font-size: 3rem;
+  opacity: 0.2;
+  color: var(--card-text);
+}
+
