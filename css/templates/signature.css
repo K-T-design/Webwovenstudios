@@ -1,0 +1,22 @@
+/* Template: Signature — horizontal email-signature style structure (ARCHITECTURE §20).
+   Reuses size="signature" so the existing export + preview stay aligned. */
+.profile-card[data-template="signature"],
+.profile-card[data-size="signature"] {
+  max-width: 600px;
+  min-height: auto;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+}
+
+.profile-card[data-template="signature"] .card-header,
+.profile-card[data-size="signature"] .card-header {
+  display: none;
+}
+
+.profile-card[data-template="signature"] .card-body,
+.profile-card[data-size="signature"] .card-body {
+  padding: 24px;
+}

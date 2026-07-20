@@ -1,0 +1,66 @@
+/* ============================================================================
+   ANIMATION PACK: executive (id: "executive")
+   ----------------------------------------------------------------------------
+   Attached via [data-animation-pack="executive"] (set by AnimationEngine, gated by
+   animationsEnabled + prefers-reduced-motion).
+
+   Motion language (Design Bible §10–§12, §24): corporate calm. Soft light sweep across
+   the header, a slow breathing glow, a gentle reveal on load, and a very subtle hover
+   depth. Only ALLOWED motions — never bounce, flash, shake, or spin.
+
+   transform/opacity only (GPU-composited); resolves to static under reduced-motion.
+   ============================================================================ */
+
+@keyframes exec-light-sweep {
+  from { transform: translateX(-120%); }
+  to   { transform: translateX(220%); }
+}
+
+@keyframes exec-breathe {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 0.85; }
+}
+
+@keyframes exec-reveal {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Gentle reveal of the whole card. */
+.profile-card[data-animation-pack="executive"] {
+  animation: exec-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Soft light sweep across the header (a thin highlight that travels once). */
+.profile-card[data-animation-pack="executive"] .card-header {
+  position: relative;
+  overflow: hidden;
+}
+.profile-card[data-animation-pack="executive"] .card-header::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0; width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: translateX(-120%);
+  animation: exec-light-sweep 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s 1;
+}
+
+/* Slow breathing glow on the avatar border. */
+.profile-card[data-animation-pack="executive"] .card-avatar {
+  animation: exec-breathe 7s ease-in-out infinite;
+}
+
+/* Very subtle hover depth (replaces the static hover lift with a softer one). */
+.profile-card[data-animation-pack="executive"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 26px 52px rgba(0, 0, 0, 0.16);
+}
+
+/* Reduced-motion: resolve to static end-state (Design Bible §19). */
+@media (prefers-reduced-motion: reduce) {
+  .profile-card[data-animation-pack="executive"],
+  .profile-card[data-animation-pack="executive"] .card-header::after,
+  .profile-card[data-animation-pack="executive"] .card-avatar {
+    animation: none !important;
+  }
+}

@@ -1,10 +1,13 @@
 import { $ } from './utils/dom.js';
 import { appState } from './config/state.js';
-import { MultiStepForm } from './components/MultiStepForm.js';
 import { PreviewEngine } from './components/PreviewEngine.js';
-import { generateStandaloneHTML } from './utils/export.js';
+import { MultiStepForm } from './components/MultiStepForm.js';
+import { generateStandaloneHTML, COLLECTION_STYLES, setBaseCardCss } from './utils/export.js';
 import { BackendService } from './services/backend.js';
 import { generateEmailHTML } from './utils/emailExporter.js';
+import { initAnimations } from './animations/AnimationEngine.js';
+import { studio } from './config/StudioManager.js';
+import { StudioSelector } from './components/StudioSelector.js';
 
 class App {
   constructor() {
@@ -15,11 +18,82 @@ class App {
     // Initialize Components
     this.previewEngine = new PreviewEngine();
     this.multiStepForm = new MultiStepForm();
+    this.studioSelector = new StudioSelector();
 
     this.initHeaderActions();
     this.initExportActions();
     this.initImageUpload();
+
+    // Compose the Signature export base CSS from the modular partials so the
+    // export no longer duplicates base.css/signature.css/theme partials by hand
+    // (ARCHITECTURE §8 refactor). Maintains the regression-safe invariant: if any
+    // partial fails to load, the hand-maintained BASE_CARD_CSS fallback stands and
+    // the Signature export output is reproduced exactly.
+    this.composeBaseCardCssFromPartials();
     this.initStep7Logic();
+    initAnimations($('#previewCard'));
+
+    // Phase 2A/2B: ensure the active collection's CSS (art-direction + animation pack)
+    // is available to the Export Engine for WYSIWYG output (lazy + cached via StudioManager).
+    // For 'signature' this resolves to '' because BASE_CARD_CSS already reproduces the look.
+    this._lastCollection = appState.get().collection || 'signature';
+    this._preloadCollectionCss(this._lastCollection);
+
+    // Prewarm on collection switch so the first export of a switched collection is instant.
+    appState.subscribe((state) => {
+      if (state.collection && state.collection !== this._lastCollection) {
+        this._lastCollection = state.collection;
+        this._preloadCollectionCss(state.collection);
+      }
+    });
+  }
+
+  /** Lazy-load a collection's art-direction CSS + its animation-pack CSS into COLLECTION_STYLES. */
+  _preloadCollectionCss(collectionId) {
+    const collection = studio.getCollection(collectionId);
+    const packId = collection ? collection.animationPack : '';
+    const jobs = [studio.loadCollectionCss(collectionId)];
+    if (packId) jobs.push(this._loadAnimationCss(packId));
+    Promise.all(jobs).then(([css, packCss]) => {
+      const combined = [css, packCss].filter(Boolean).join('\n');
+      if (combined) COLLECTION_STYLES[collectionId] = combined;
+    }).catch(() => { /* fallback to BASE_CARD_CSS — never breaks export */ });
+  }
+
+  /** Fetch an animation pack's CSS text (used only for non-static packs in export). */
+  _loadAnimationCss(packId) {
+    if (!packId) return Promise.resolve('');
+    return fetch(`css/animations/${packId}.css`)
+      .then(res => res.ok ? res.text() : '')
+      .catch(() => '');
+  }
+
+  /**
+   * Generate the Signature export base CSS from the actual modular partials instead
+   * of the hand-maintained duplicate inside export.js (ARCHITECTURE §8). The partials
+   * that define the Signature look are: cards/base.css + collections/signature.css +
+   * the four theme variable blocks. Composing them produces the same rules the export
+   * already inlines, but from a single source of truth — eliminating drift.
+   *
+   * Regression-safe: only replaces the base if EVERY partial loads. Any failure leaves
+   * the hand-maintained BASE_CARD_CSS fallback in place, so Signature export output is
+   * always reproduced exactly.
+   */
+  composeBaseCardCssFromPartials() {
+    const partials = [
+      'css/cards/base.css',
+      'css/collections/signature.css',
+      'css/themes/light.css',
+      'css/themes/dark.css',
+      'css/themes/glass.css',
+      'css/themes/dark-glass.css'
+    ];
+    Promise.all(partials.map(p =>
+      fetch(p).then(res => res.ok ? res.text() : Promise.reject(new Error(p)))
+    )).then((texts) => {
+      const composed = texts.join('\n');
+      if (composed.trim()) setBaseCardCss(composed);
+    }).catch(() => { /* keep hand-maintained BASE_CARD_CSS fallback */ });
   }
 
   initHeaderActions() {

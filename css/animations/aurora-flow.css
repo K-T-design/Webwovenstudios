@@ -1,0 +1,39 @@
+/* ANIMATION PACK: aurora-flow — Alive but calm (Design Bible §17/§21).
+   Drifting aurora background, gentle floating of the card, slow breathing depth,
+   soft glow. Movement is the identity. Gated by [data-animation-pack="aurora-flow"]. */
+
+[data-animation-pack="aurora-flow"] {
+  animation: motion-float 14s ease-in-out infinite;
+}
+
+[data-animation-pack="aurora-flow"]::before {
+  animation: motion-aurora 28s ease-in-out infinite alternate;
+}
+
+[data-animation-pack="aurora-flow"] .card-avatar {
+  animation: motion-breathe 8s ease-in-out infinite;
+}
+
+@keyframes motion-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes motion-aurora {
+  0%   { transform: translate3d(0,0,0) scale(1); opacity: 0.78; }
+  50%  { transform: translate3d(3%, -2%, 0) scale(1.08); opacity: 0.95; }
+  100% { transform: translate3d(-3%, 2%, 0) scale(1); opacity: 0.82; }
+}
+
+@keyframes motion-breathe {
+  0%, 100% { box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 22px rgba(109,94,252,0.30); }
+  50%      { box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 40px rgba(34,211,238,0.45); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animation-pack="aurora-flow"],
+  [data-animation-pack="aurora-flow"]::before,
+  [data-animation-pack="aurora-flow"] .card-avatar {
+    animation: none !important;
+  }
+}

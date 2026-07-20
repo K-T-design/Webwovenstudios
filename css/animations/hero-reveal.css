@@ -1,0 +1,80 @@
+/* ANIMATION PACK: hero-reveal — Cinematic, portrait-led (Design Bible §11/§21).
+   Cinematic reveal (fade + slide-up), portrait subtle parallax (slow scale breathe,
+   NOT aggressive), glass breathing on panels, divider draw, a slow light sweep.
+   Gated by [data-animation-pack="hero-reveal"]. */
+
+/* Portrait subtle parallax: a slow, gentle scale breathe (subtle scale, allowed). */
+[data-animation-pack="hero-reveal"]::before {
+  animation: hero-parallax 12s ease-in-out infinite;
+}
+
+/* Slow light sweep across the cinematic overlay. */
+[data-animation-pack="hero-reveal"]::after {
+  background-image:
+    linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.10) 50%, transparent 58%),
+    linear-gradient(180deg, rgba(8, 9, 14, 0.55) 0%, rgba(8, 9, 14, 0.12) 38%, rgba(8, 9, 14, 0.10) 56%, rgba(8, 9, 14, 0.82) 100%),
+    radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+  animation: hero-sweep 9s ease-in-out infinite;
+}
+
+[data-animation-pack="hero-reveal"] .card-name,
+[data-animation-pack="hero-reveal"] .card-title,
+[data-animation-pack="hero-reveal"] .card-company,
+[data-animation-pack="hero-reveal"] .card-contact,
+[data-animation-pack="hero-reveal"] .card-social {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+[data-animation-pack="hero-reveal"] .card-contact { animation-delay: 0.12s; }
+[data-animation-pack="hero-reveal"] .card-social { animation-delay: 0.18s; }
+
+/* Divider draw on the profession label. */
+[data-animation-pack="hero-reveal"] .card-title::before {
+  transform-origin: left center;
+  animation: hero-draw 0.7s ease-out 0.25s both;
+}
+
+/* Glass breathing on contact panels. */
+[data-animation-pack="hero-reveal"] .contact-item {
+  animation: hero-glass 7s ease-in-out infinite;
+}
+
+@keyframes hero-parallax {
+  0%, 100% { transform: scale(1.04) translateY(0); }
+  50%      { transform: scale(1.10) translateY(-1.5%); }
+}
+
+@keyframes hero-sweep {
+  0%   { opacity: 0.85; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.85; }
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-draw {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 0.9; }
+}
+
+@keyframes hero-glass {
+  0%, 100% { background: rgba(255, 255, 255, 0.10); }
+  50%      { background: rgba(255, 255, 255, 0.18); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animation-pack="hero-reveal"]::before,
+  [data-animation-pack="hero-reveal"]::after,
+  [data-animation-pack="hero-reveal"] .card-name,
+  [data-animation-pack="hero-reveal"] .card-title,
+  [data-animation-pack="hero-reveal"] .card-company,
+  [data-animation-pack="hero-reveal"] .card-contact,
+  [data-animation-pack="hero-reveal"] .card-social,
+  [data-animation-pack="hero-reveal"] .card-title::before,
+  [data-animation-pack="hero-reveal"] .contact-item {
+    animation: none !important;
+  }
+}

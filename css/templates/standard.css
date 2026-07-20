@@ -1,0 +1,7 @@
+/* Template: Standard — the default card structure (ARCHITECTURE §20).
+   Defines layout metrics only; appearance comes from base + theme + collection. */
+.profile-card[data-template="standard"],
+.profile-card[data-size="standard"] {
+  max-width: 400px;
+  min-height: 500px;
+}

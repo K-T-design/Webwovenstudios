@@ -239,25 +239,29 @@
 
         </div>
 
-        <!-- Step 5: Design -->
+        <!-- Step 5: Studio (Collections, Themes, Templates) -->
         <div class="form-step" id="step5">
-          <h2 class="step-title">Design & Theme</h2>
-          
+          <h2 class="step-title">Studio</h2>
+          <p class="step-subtitle">Choose a Collection to set the art direction of your card. Themes and Templates adapt to what each Collection supports.</p>
+
+          <div class="form-group">
+            <label class="form-label">Collections</label>
+            <div class="studio-grid" id="studioCollections">
+              <!-- Rendered by StudioSelector from the Collection Registry -->
+            </div>
+          </div>
+
           <div class="form-group">
             <label class="form-label">Theme</label>
-            <div class="options-grid">
-              <div class="option-card selected" data-type="theme" data-value="light" role="button" tabindex="0">
-                <i>☀️</i><div class="option-title">Light</div>
-              </div>
-              <div class="option-card" data-type="theme" data-value="dark" role="button" tabindex="0">
-                <i>🌙</i><div class="option-title">Dark</div>
-              </div>
-              <div class="option-card" data-type="theme" data-value="glass" role="button" tabindex="0">
-                <i>🪟</i><div class="option-title">Glass</div>
-              </div>
-              <div class="option-card" data-type="theme" data-value="dark-glass" role="button" tabindex="0">
-                <i>🌌</i><div class="option-title">Dark Glass</div>
-              </div>
+            <div class="options-grid" id="studioThemes">
+              <!-- Rendered by StudioSelector from the Theme Registry -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Template</label>
+            <div class="options-grid" id="studioTemplates">
+              <!-- Rendered by StudioSelector from the Template Registry -->
             </div>
           </div>
 

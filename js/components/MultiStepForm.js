@@ -17,16 +17,31 @@ export class MultiStepForm {
     $('#btnPrev')?.addEventListener('click', () => this.prevStep());
     
     // Bind option cards (Theme, Size, etc)
+    const selectOptionCard = (card) => {
+      if (!card) return;
+      const type = card.dataset.type;
+      const value = card.dataset.value;
+
+      $$(`.option-card[data-type="${type}"]`).forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+
+      appState.update({ [type]: value });
+    };
+
     document.addEventListener('click', (e) => {
       const card = e.target.closest('.option-card');
+      if (card) selectOptionCard(card);
+    });
+
+    // Keyboard activation for role="button" option cards (WCAG 2.1.1 — keyboard nav).
+    // Native click does not fire from Enter/Space on non-<button> elements, so we
+    // forward them explicitly. This is an accessibility fix, not a new feature.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+      const card = e.target.closest && e.target.closest('.option-card');
       if (card) {
-        const type = card.dataset.type;
-        const value = card.dataset.value;
-        
-        $$(`.option-card[data-type="${type}"]`).forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        
-        appState.update({ [type]: value });
+        e.preventDefault();
+        selectOptionCard(card);
       }
     });
 
@@ -94,7 +109,7 @@ export class MultiStepForm {
         colorPicker.value = state.accentColor;
       }
       
-      ['theme', 'size', 'orientation', 'alignment'].forEach(type => {
+      ['theme', 'size', 'orientation', 'alignment', 'collection', 'template'].forEach(type => {
         $$(`.option-card[data-type="${type}"]`).forEach(c => {
           if (c.dataset.value === state[type]) {
             c.classList.add('selected');

@@ -1,0 +1,46 @@
+/* ANIMATION PACK: organic-drift — Handcrafted calm (Design Bible §17/§21).
+   Organic blobs drift slowly, the surface breathes gently, a soft fade reveals
+   content. Warm, never mechanical. Gated by [data-animation-pack="organic-drift"]. */
+
+[data-animation-pack="organic-drift"]::after {
+  animation: org-blob 22s ease-in-out infinite alternate;
+}
+
+[data-animation-pack="organic-drift"] .card-avatar {
+  animation: org-breathe 9s ease-in-out infinite;
+}
+
+[data-animation-pack="organic-drift"] .card-name,
+[data-animation-pack="organic-drift"] .card-title,
+[data-animation-pack="organic-drift"] .card-company,
+[data-animation-pack="organic-drift"] .card-contact,
+[data-animation-pack="organic-drift"] .card-social {
+  animation: org-fade 0.7s ease-out both;
+}
+
+@keyframes org-blob {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(4%, 3%) rotate(8deg); }
+}
+
+@keyframes org-breathe {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+@keyframes org-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animation-pack="organic-drift"]::after,
+  [data-animation-pack="organic-drift"] .card-avatar,
+  [data-animation-pack="organic-drift"] .card-name,
+  [data-animation-pack="organic-drift"] .card-title,
+  [data-animation-pack="organic-drift"] .card-company,
+  [data-animation-pack="organic-drift"] .card-contact,
+  [data-animation-pack="organic-drift"] .card-social {
+    animation: none !important;
+  }
+}

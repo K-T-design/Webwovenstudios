@@ -3,7 +3,13 @@
  * 
  * This module provides email-compatible HTML generation from profile cards.
  * It supports Gmail, Outlook, and other major email clients with optimized layouts.
+ *
+ * Email signatures are ALWAYS static (ARCHITECTURE §9): no animation is ever included,
+ * because email clients strip or ignore animation. Collection variation is expressed only
+ * through static tokens (e.g., an email-accent color) resolved from the registry.
  */
+
+import { getCollection } from '../config/constants.js';
 
 /**
  * Generate email-compatible HTML signature from profile data
@@ -46,20 +52,28 @@ export const generateEmailHTML = (profileData, format = 'gmail') => {
     imageUrl: safeURL(profileData.imageUrl),
     socialLinks: sanitizedLinks,
     theme: profileData.theme,
-    accentColor: profileData.accentColor
+    accentColor: profileData.accentColor,
+    collection: profileData.collection
   };
 
-  const { name, jobTitle, company, email, phone, imageUrl, socialLinks, theme, accentColor } = safeData;
+  const { name, jobTitle, company, email, phone, imageUrl, socialLinks, theme, accentColor, collection } = safeData;
+
+  // Resolve a static email accent from the active collection (ARCHITECTURE §9, §18).
+  // Default collections (e.g. 'signature') do not define an emailAccent, so the classic
+  // Gmail blue (#1a73e8) is preserved — current email output is unchanged. Future collections
+  // may set tokens.emailAccent to brand the signature without animation.
+  const collectionDef = getCollection(collection || 'signature');
+  const emailAccent = (collectionDef && collectionDef.tokens && collectionDef.tokens.emailAccent) || '#1a73e8';
   
   const emailSafeStyles = `
     body, table, td, p, a { margin: 0; padding: 0; }
     body { font-family: Arial, sans-serif; font-size: 14px; color: #333333; line-height: 1.4; }
     table { border-collapse: collapse; width: 100%; }
     img { display: block; border: 0; max-width: 100%; height: auto; }
-    a { color: #1a73e8; text-decoration: none; }
+    a { color: ${emailAccent}; text-decoration: none; }
     .gmail-signature { background: transparent; }
     .signature-name { font-weight: bold; color: #000000; font-size: 16px; }
-    .signature-title { color: #1a73e8; font-size: 14px; }
+    .signature-title { color: ${emailAccent}; font-size: 14px; }
     .signature-company { color: #666666; font-size: 12px; }
     .signature-contact { color: #555555; font-size: 12px; margin-top: 8px; }
     .signature-social { margin-top: 10px; }

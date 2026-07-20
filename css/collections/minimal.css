@@ -1,0 +1,134 @@
+/* ============================================================================
+   COLLECTION: Minimal (id: "minimal")
+   ----------------------------------------------------------------------------
+   Almost nothing. Maximum whitespace, typography-first, almost invisible decoration,
+   restrained color, timeless elegance (Design Bible §17: Minimal / Light surfaces).
+   The name carries the entire design. Motion pack: "minimal-fade" (a single fade).
+
+   Art-direction layer (ARCHITECTURE §18) on top of css/cards/base.css. No decorative
+   planes, no texture, no shadows beyond the faintest lift. Suppresses all inherited
+   decorative layers.
+   ============================================================================ */
+
+.profile-card[data-collection="minimal"] {
+  --card-radius: 2px;                   /* near-sharp, exact */
+  --card-accent: var(--card-accent, #111111);
+  --card-accent-2: var(--card-accent-2, #868e96);
+
+  background: #ffffff;
+  color: #111111;
+  border: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+/* Remove the Signature hairline and any inherited decorative layers. */
+.profile-card[data-collection="minimal"]::before,
+.profile-card[data-collection="minimal"]::after {
+  display: none !important;
+}
+
+.profile-card[data-collection="minimal"] .card-header {
+  height: 0;                            /* no header band — pure whitespace */
+  background: transparent;
+  border: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Avatar: small, quiet, top-aligned — present but understated. */
+.profile-card[data-collection="minimal"] .card-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: none;
+  bottom: auto;
+  top: 36px;
+  left: 40px;
+  z-index: 3;
+}
+
+.profile-card[data-collection="minimal"] .card-body {
+  padding: 40px 40px 44px;
+  padding-top: 148px;                   /* generous top whitespace around avatar */
+  gap: 4px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Typography-first: large, refined, the hero of the design. */
+.profile-card[data-collection="minimal"] .card-name {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: #111111;
+  margin-bottom: 12px;
+}
+
+/* Single hairline kicker in restrained grey. */
+.profile-card[data-collection="minimal"] .card-title {
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #868e96;
+  margin-bottom: 8px;
+}
+
+.profile-card[data-collection="minimal"] .card-company {
+  font-size: 0.98rem;
+  font-weight: 400;
+  color: #495057;
+  margin-bottom: 36px;
+}
+
+/* One barely-there hairline divider. */
+.profile-card[data-collection="minimal"] .card-contact {
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  padding-top: 24px;
+  gap: 10px;
+}
+
+.profile-card[data-collection="minimal"] .contact-item {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.profile-card[data-collection="minimal"] .contact-item i {
+  color: #adb5bd;
+}
+
+/* Minimal line-icon social links — no boxes. */
+.profile-card[data-collection="minimal"] .card-social {
+  margin-top: 26px;
+  gap: 16px;
+}
+
+.profile-card[data-collection="minimal"] .social-item {
+  width: auto;
+  height: auto;
+  min-width: auto;
+  background: none;
+  border: none;
+  color: #868e96;
+  font-size: 1.15rem;
+  padding: 0;
+}
+
+.profile-card[data-collection="minimal"] .social-item:hover {
+  color: #111111;
+  background: none;
+}
+
+.profile-card[data-collection="minimal"][data-alignment="center"] .card-body {
+  text-align: center;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.profile-card[data-collection="minimal"][data-alignment="center"] .card-avatar {
+  left: 50%;
+  transform: translateX(-50%);
+}

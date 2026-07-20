@@ -1,0 +1,258 @@
+/* ============================================================================
+   COLLECTION: Executive (id: "executive") — REDESIGNED (Phase 2E.3)
+   ----------------------------------------------------------------------------
+   The most premium corporate design in the Studio — a boardroom dossier / investor
+   profile (Fortune 500, McKinsey annual report, private-equity letterhead). It
+   communicates authority through PRECISION, not ornament: an exacting grid, hairline
+   architectural rules, a restrained ink-and-paper palette, and a single metallic accent.
+   Expensive because every measurement is deliberate.
+
+   Art-direction layer (ARCHITECTURE §18) on css/cards/base.css. Surface from
+   css/themes/*; structure from css/templates/*. Motion: the "executive" Animation Pack
+   (soft light sweep, slow breathing, gentle reveal, subtle hover depth) — Design-Bible
+   approved only (§10–§12), gated by prefers-reduced-motion.
+   ============================================================================ */
+
+.profile-card[data-collection="executive"] {
+  /* Art-direction tokens — restrained, corporate, exacting. */
+  --card-radius: 4px;
+  --card-accent: var(--card-accent, #9a7b3f);          /* restrained bronze/gold */
+  --exec-ink: #161b24;                                   /* near-black ink */
+  --exec-ink-soft: #5b6473;
+  --exec-paper: #f7f6f3;                                 /* warm archival paper */
+  --exec-rule: rgba(22, 27, 36, 0.14);
+  --exec-rule-soft: rgba(22, 27, 36, 0.08);
+  --exec-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --exec-serif: "Playfair Display", "Georgia", serif;
+
+  background: var(--exec-paper);
+  color: var(--exec-ink);
+  font-family: var(--exec-sans);
+  border: 1px solid var(--exec-rule);
+  box-shadow: 0 24px 56px rgba(22, 27, 36, 0.14);
+  overflow: hidden;
+}
+
+/* Dark surfaces: deep navy-boardroom, brighter hairlines. */
+.profile-card[data-collection="executive"][data-theme="dark"],
+.profile-card[data-collection="executive"][data-theme="dark-glass"] {
+  --exec-ink: #eef1f6;
+  --exec-ink-soft: #a7afc0;
+  --exec-paper: #13171f;
+  --exec-rule: rgba(255, 255, 255, 0.16);
+  --exec-rule-soft: rgba(255, 255, 255, 0.08);
+  --card-accent: #c4a162;
+  background: linear-gradient(180deg, #161b24 0%, #0f131a 100%);
+}
+.profile-card[data-collection="executive"][data-theme="light"],
+.profile-card[data-collection="executive"]:not([data-theme]) {
+  background: var(--exec-paper);
+}
+
+/* Hairline architectural grid — two fine vertical rules that frame the composition
+   (Design Bible §17 / §21: refined lines, not decoration). */
+.profile-card[data-collection="executive"]::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 28px;
+  width: 1px;
+  background: var(--exec-rule-soft);
+  pointer-events: none;
+  z-index: 1;
+}
+.profile-card[data-collection="executive"]::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  right: 28px;
+  width: 1px;
+  background: var(--exec-rule-soft);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Header is no longer a loud band — a thin top register with a tracking label, so the
+   card reads like a printed dossier header rather than a hero. */
+.profile-card[data-collection="executive"] .card-header {
+  position: static;
+  height: auto;
+  background: transparent;
+  border: none;
+  padding: 30px 40px 0;
+  z-index: 2;
+}
+
+/* ---- Portrait: a precise framed plate, not a floating badge -----------------
+   Anchored bottom-left, held by hairline rules that extend into the composition — the
+   discipline is the detail. */
+.profile-card[data-collection="executive"] .card-avatar {
+  position: absolute;
+  left: 40px;
+  bottom: 38px;
+  width: 132px;
+  height: 156px;
+  border-radius: 2px;
+  border: none;
+  background: #181c24;
+  box-shadow: 0 18px 40px rgba(22, 27, 36, 0.22);
+  overflow: hidden;
+  z-index: 3;
+}
+/* Hairline frame drawn just inside the plate edge — precision, not a thick border. */
+.profile-card[data-collection="executive"] .card-avatar::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--card-accent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.profile-card[data-collection="executive"] .card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  filter: grayscale(0.12) contrast(1.02);
+  transition: filter var(--transition-slow), transform var(--transition-slow);
+}
+.profile-card[data-collection="executive"]:hover .card-avatar img {
+  transform: scale(1.03);
+  filter: grayscale(0) contrast(1.04);
+}
+
+/* ---- Body: disciplined register, generous but exact ------------------------- */
+.profile-card[data-collection="executive"] .card-body {
+  padding: 30px 40px 46px;
+  gap: 6px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Top tracking line — "PROFILE / CONFIDENTIAL" dossier marker. */
+.profile-card[data-collection="executive"] .card-body::before {
+  content: "PROFILE";
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  color: var(--exec-ink-soft);
+  margin-bottom: 18px;
+}
+
+/* Large, quiet name with a hairline rule beneath the header register. */
+.profile-card[data-collection="executive"] .card-name {
+  font-family: var(--exec-serif);
+  font-size: clamp(2rem, 5.5vw, 2.7rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  color: var(--exec-ink);
+  margin-bottom: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--exec-rule);
+  max-width: 100%;
+}
+
+/* Role: tracked caps, the single accent — restrained. */
+.profile-card[data-collection="executive"] .card-title {
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--card-accent);
+  margin-bottom: 4px;
+}
+
+/* Organization: quiet, tracked. */
+.profile-card[data-collection="executive"] .card-company {
+  font-size: 0.96rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--exec-ink-soft);
+  margin-bottom: 30px;
+}
+
+/* Contacts: structured, separated by hairlines — an exact list. */
+.profile-card[data-collection="executive"] .card-contact {
+  border-top: 1px solid var(--exec-rule);
+  padding-top: 18px;
+  gap: 10px;
+  /* leave room for the framed portrait plate at the bottom-left */
+  padding-left: 156px;
+}
+.profile-card[data-collection="executive"] .contact-item {
+  font-size: 0.86rem;
+  color: var(--exec-ink);
+  letter-spacing: 0.01em;
+}
+.profile-card[data-collection="executive"] .contact-item i {
+  color: var(--card-accent);
+  opacity: 0.85;
+}
+
+/* Social: quiet square tiles with hairline borders, accent on hover. */
+.profile-card[data-collection="executive"] .card-social {
+  margin-top: 20px;
+  gap: 8px;
+  padding-left: 156px;
+}
+.profile-card[data-collection="executive"] .social-item {
+  width: 36px;
+  height: 36px;
+  border-radius: 2px;
+  background: transparent;
+  border: 1px solid var(--exec-rule);
+  color: var(--exec-ink);
+  font-size: 0.95rem;
+  transition: background var(--transition-fast), color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+.profile-card[data-collection="executive"] .social-item:hover {
+  background: var(--card-accent);
+  color: #fff;
+  border-color: var(--card-accent);
+}
+
+/* ---- Center alignment: portrait becomes a centered plate, content centered --- */
+.profile-card[data-collection="executive"][data-alignment="center"] .card-header {
+  text-align: center;
+}
+.profile-card[data-collection="executive"][data-alignment="center"] .card-avatar {
+  position: static;
+  margin: 0 auto 22px;
+  left: auto; bottom: auto;
+}
+.profile-card[data-collection="executive"][data-alignment="center"] .card-body {
+  text-align: center;
+}
+.profile-card[data-collection="executive"][data-alignment="center"] .card-contact,
+.profile-card[data-collection="executive"][data-alignment="center"] .card-social {
+  padding-left: 0;
+}
+
+/* ---- Responsive portrait safety (carried from prior hardening) -------------- */
+/* Compact: keep the framed plate but pull contacts in less. */
+.profile-card[data-collection="executive"][data-size="compact"] .card-avatar {
+  width: 112px;
+  height: 132px;
+  left: 32px;
+}
+.profile-card[data-collection="executive"][data-size="compact"] .card-contact,
+.profile-card[data-collection="executive"][data-size="compact"] .card-social {
+  padding-left: 136px;
+}
+
+/* Horizontal: the base rule sets position:static; contain the plate in the header
+   column and remove the left shift on contacts. */
+.profile-card[data-collection="executive"][data-orientation="horizontal"] .card-avatar {
+  position: static;
+  width: 120px;
+  height: 144px;
+  left: auto; bottom: auto;
+  margin: 0 auto 22px;
+}
+.profile-card[data-collection="executive"][data-orientation="horizontal"] .card-contact,
+.profile-card[data-collection="executive"][data-orientation="horizontal"] .card-social {
+  padding-left: 0;
+}

@@ -1,0 +1,6 @@
+/* Template: Large — expanded footprint (ARCHITECTURE §20). */
+.profile-card[data-template="large"],
+.profile-card[data-size="large"] {
+  max-width: 600px;
+  min-height: 600px;
+}

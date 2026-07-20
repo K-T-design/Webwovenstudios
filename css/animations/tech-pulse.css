@@ -1,0 +1,39 @@
+/* ANIMATION PACK: tech-pulse — Digital precision (Design Bible §11/§21).
+   Soft glow pulse on accents, faint grid settling in, slow orbital glow breathe.
+   A static orbital ring; only its glow breathes (NO continuous spin).
+   Gated by [data-animation-pack="tech-pulse"]. */
+
+[data-animation-pack="tech-pulse"]::before {
+  animation: tech-grid 1.2s ease-out both;
+}
+
+[data-animation-pack="tech-pulse"]::after {
+  animation: tech-orbit-glow 6s ease-in-out infinite;
+}
+
+[data-animation-pack="tech-pulse"] .card-avatar {
+  animation: tech-pulse-glow 6s ease-in-out infinite;
+}
+
+@keyframes tech-grid {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes tech-orbit-glow {
+  0%, 100% { box-shadow: 0 0 14px rgba(19,241,198,0.20); opacity: 0.7; }
+  50%      { box-shadow: 0 0 26px rgba(19,241,198,0.5); opacity: 1; }
+}
+
+@keyframes tech-pulse-glow {
+  0%, 100% { box-shadow: 0 0 18px rgba(19,241,198,0.35), 0 14px 30px rgba(0,0,0,0.45); }
+  50%      { box-shadow: 0 0 34px rgba(19,241,198,0.6), 0 14px 30px rgba(0,0,0,0.45); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animation-pack="tech-pulse"]::before,
+  [data-animation-pack="tech-pulse"]::after,
+  [data-animation-pack="tech-pulse"] .card-avatar {
+    animation: none !important;
+  }
+}

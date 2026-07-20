@@ -1,0 +1,10 @@
+/* Theme: Dark Glass — dark glassmorphism surface (Design Bible §9, ARCHITECTURE §19). */
+.profile-card[data-theme="dark-glass"] {
+  --card-bg: rgba(18, 18, 18, 0.7);
+  --card-text: #ffffff;
+  --card-text-muted: #cccccc;
+  --card-surface: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

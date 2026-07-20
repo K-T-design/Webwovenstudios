@@ -1,0 +1,48 @@
+/* ANIMATION PACK: creative-reveal — Expressive within discipline (Design Bible §11/§21).
+   Staggered slide-up of planes, overlapping layers easing into place, confident fade.
+   Energy, never chaos. Gated by [data-animation-pack="creative-reveal"]. */
+
+[data-animation-pack="creative-reveal"] .card-name {
+  animation: cr-slide 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+[data-animation-pack="creative-reveal"] .card-title {
+  animation: cr-slide 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+}
+[data-animation-pack="creative-reveal"] .card-company {
+  animation: cr-slide 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+[data-animation-pack="creative-reveal"] .card-contact {
+  animation: cr-fade 0.6s ease-out 0.18s both;
+}
+[data-animation-pack="creative-reveal"] .card-social {
+  animation: cr-fade 0.6s ease-out 0.24s both;
+}
+[data-animation-pack="creative-reveal"] .card-avatar {
+  animation: cr-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cr-slide {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cr-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cr-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animation-pack="creative-reveal"] .card-name,
+  [data-animation-pack="creative-reveal"] .card-title,
+  [data-animation-pack="creative-reveal"] .card-company,
+  [data-animation-pack="creative-reveal"] .card-contact,
+  [data-animation-pack="creative-reveal"] .card-social,
+  [data-animation-pack="creative-reveal"] .card-avatar {
+    animation: none !important;
+  }
+}

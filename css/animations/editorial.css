@@ -1,0 +1,82 @@
+/* ============================================================================
+   ANIMATION PACK: editorial-reveal (id: "editorial-reveal")
+   ----------------------------------------------------------------------------
+   Attached to a card via [data-animation-pack="editorial-reveal"] (set by the
+   AnimationEngine, gated by animationsEnabled + prefers-reduced-motion).
+
+   Motion language (Design Bible §10–§12, §24): cinematic but restrained.
+   Only ALLOWED motions — fade, slide, reveal, line-draw, subtle grain drift.
+   FORBIDDEN motions are never used: no bounce, flash, shake, spin, aggressive scale.
+
+   All animations are transform/opacity only (GPU-composited) and resolve to a static
+   end-state under prefers-reduced-motion (the backstop in animations.css also enforces
+   this). Durations follow the Design Bible bands: micro 150–250ms, page 350–500ms,
+   backgrounds 8–30s, breathing 6–10s.
+   ============================================================================ */
+
+@keyframes editorial-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes editorial-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes editorial-line-draw {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+@keyframes editorial-grain {
+  from { background-position: 0 0; }
+  to   { background-position: 120px 80px; }
+}
+
+/* Reveal sequence: card fades in, then children rise + the divider draws itself. */
+.profile-card[data-animation-pack="editorial-reveal"] {
+  animation: editorial-fade 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.profile-card[data-animation-pack="editorial-reveal"] .card-body > * {
+  animation: editorial-rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.12s + var(--reveal-i, 0) * 0.06s);
+}
+
+/* Stagger via nth-child (no JS required). */
+.profile-card[data-animation-pack="editorial-reveal"] .card-body > *:nth-child(1) { --reveal-i: 0; }
+.profile-card[data-animation-pack="editorial-reveal"] .card-body > *:nth-child(2) { --reveal-i: 1; }
+.profile-card[data-animation-pack="editorial-reveal"] .card-body > *:nth-child(3) { --reveal-i: 2; }
+.profile-card[data-animation-pack="editorial-reveal"] .card-body > *:nth-child(4) { --reveal-i: 3; }
+.profile-card[data-animation-pack="editorial-reveal"] .card-body > *:nth-child(5) { --reveal-i: 4; }
+
+/* Thin divider line draws itself (Design Bible §12). */
+.profile-card[data-animation-pack="editorial-reveal"] .card-contact {
+  position: relative;
+}
+.profile-card[data-animation-pack="editorial-reveal"] .card-contact::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--editorial-rule, rgba(17, 17, 17, 0.14));
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: editorial-line-draw 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+
+/* Subtle grain drift on the paper texture (background 8–30s band). */
+.profile-card[data-animation-pack="editorial-reveal"]::before {
+  animation: editorial-grain 24s linear infinite alternate;
+}
+
+/* Reduced-motion: everything resolves to its final static state (Design Bible §19). */
+@media (prefers-reduced-motion: reduce) {
+  .profile-card[data-animation-pack="editorial-reveal"],
+  .profile-card[data-animation-pack="editorial-reveal"] .card-body > *,
+  .profile-card[data-animation-pack="editorial-reveal"] .card-contact::before,
+  .profile-card[data-animation-pack="editorial-reveal"]::before {
+    animation: none !important;
+  }
+}

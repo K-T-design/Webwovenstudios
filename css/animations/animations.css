@@ -1,0 +1,49 @@
+/* ============================================================================
+   ANIMATION FRAMEWORK (WebWoven Studios)
+   ----------------------------------------------------------------------------
+   Animations are SEPARATED from layouts (ARCHITECTURE §21). They are independent
+   modules attached via a collection's `animationPack` id, never hardcoded into card
+   structure. The AnimationEngine (js/animations/AnimationEngine.js) sets
+   `data-animation-pack="<id>"` on the card; the rules below only activate when a pack
+   is assigned AND motion is allowed (state.animationsEnabled + prefers-reduced-motion).
+
+   Design Bible §10–§12: motion communicates quality, never attention. Allowed: fade,
+   slide, float, breathe, reveal, expand, soft glow, subtle scale. Forbidden: bounce,
+   shake, flash, continuous spin, aggressive movement. Timing bands are fixed.
+
+   Premium motion packs (Editorial Reveal, Aurora, Liquid Morph, etc.) are added LATER
+   as additional keyframes/selectors. This file currently defines only the safe, base
+   framework primitives. No collection uses them yet, so current output is unchanged.
+   ============================================================================ */
+
+/* Base framework primitives (unassigned by default — safe no-op until a pack uses them) */
+@keyframes ww-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ww-slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ww-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.02); }
+}
+
+@keyframes ww-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Reduced-motion safety net: any animation pack must resolve to a static end-state.
+   The AnimationEngine also removes the data-animation-pack attribute under reduced motion,
+   but this rule is the CSS backstop (Design Bible §19). */
+@media (prefers-reduced-motion: reduce) {
+  .profile-card[data-animation-pack] *,
+  .profile-card[data-animation-pack] {
+    animation: none !important;
+    transition: none !important;
+  }
+}

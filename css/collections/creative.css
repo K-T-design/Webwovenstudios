@@ -1,0 +1,238 @@
+/* ============================================================================
+   COLLECTION: Creative (id: "creative") — REDESIGNED (Phase 2E.3)
+   ----------------------------------------------------------------------------
+   Bold, memorable, expressive — a contemporary design-studio / branding-agency identity
+   (creative director, digital artist, filmmaker). It earns attention through
+   COMPOSED energy: an asymmetric grid, overlapping geometric color fields, a giant
+   dynamic display name, and the portrait built INTO the geometry. Innovative, never
+   messy — every offset is deliberate (Design Bible §17: Abstract Geometry, §21).
+
+   Art-direction layer (ARCHITECTURE §18) on css/cards/base.css. Surface from
+   css/themes/*; structure from css/templates/*. Motion: the "creative-reveal" Animation
+   Pack (staggered slide-up of planes, overlapping layers easing in) — Design-Bible
+   approved only (§10–§12), gated by prefers-reduced-motion.
+   ============================================================================ */
+
+.profile-card[data-collection="creative"] {
+  --card-radius: 4px;
+  --card-accent: var(--card-accent, #ff4d2e);          /* hot vermilion */
+  --card-accent-2: var(--card-accent-2, #2b2bff);      /* electric cobalt */
+  --cr-ink: #15131a;
+  --cr-paper: #f5f1e8;                                  /* warm studio paper */
+  --cr-sans: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  background: var(--cr-paper);
+  color: var(--cr-ink);
+  font-family: var(--cr-sans);
+  border: none;
+  box-shadow: 0 26px 60px rgba(21, 19, 26, 0.18);
+  overflow: hidden;
+}
+
+/* Dark surfaces: deep ink, brighter accents. */
+.profile-card[data-collection="creative"][data-theme="dark"],
+.profile-card[data-collection="creative"][data-theme="dark-glass"] {
+  --cr-ink: #f5f1e8;
+  --cr-paper: #16131d;
+  --card-accent: #ff5e3a;
+  --card-accent-2: #5a5aff;
+  background: linear-gradient(160deg, #1c1825 0%, #120f18 100%);
+}
+.profile-card[data-collection="creative"][data-theme="light"],
+.profile-card[data-collection="creative"]:not([data-theme]) {
+  background: var(--cr-paper);
+}
+
+/* ---- Overlapping geometric fields (the composition) -------------------------
+   A large tilted accent block top-right + a cobalt bar that slices the lower-left.
+   Built with clip/rotation, not gradients-as-decoration — structured geometry. */
+.profile-card[data-collection="creative"]::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -40px;
+  width: 240px;
+  height: 240px;
+  background: var(--card-accent);
+  transform: rotate(18deg);
+  z-index: 1;
+  pointer-events: none;
+}
+.profile-card[data-collection="creative"]::after {
+  content: "";
+  position: absolute;
+  left: -30px;
+  bottom: 30px;
+  width: 150px;
+  height: 26px;
+  background: var(--card-accent-2);
+  transform: rotate(-8deg);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Header holds the portrait at the top of the flow, so the name reads directly
+   beneath it. */
+.profile-card[data-collection="creative"] .card-header {
+  position: static;
+  height: auto;
+  background: transparent;
+  z-index: 2;
+  padding: 0;
+}
+
+/* ---- Portrait: a cropped plate at the top of the composition ------------------
+   In normal flow (not absolute), so the name naturally sits below it. Composed into the
+   tilted accent block with a hard offset shadow for layered depth. */
+.profile-card[data-collection="creative"] .card-avatar {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: 160px;
+  height: 196px;
+  margin: 28px 0 0 32px;
+  border-radius: 3px;
+  border: 4px solid var(--cr-paper);
+  background: #15131a;
+  box-shadow: -10px 10px 0 var(--card-accent-2), 0 18px 38px rgba(21, 19, 26, 0.28);
+  overflow: hidden;
+  z-index: 4;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+.profile-card[data-collection="creative"]:hover .card-avatar {
+  transform: translate(-3px, 3px) rotate(-1deg);
+  box-shadow: -14px 14px 0 var(--card-accent), 0 24px 46px rgba(21, 19, 26, 0.32);
+}
+.profile-card[data-collection="creative"] .card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  transition: transform var(--transition-slow);
+}
+.profile-card[data-collection="creative"]:hover .card-avatar img {
+  transform: scale(1.05);
+}
+
+/* ---- Body: asymmetric, dynamic ----------------------------------------------- */
+.profile-card[data-collection="creative"] .card-body {
+  padding: 18px 32px 40px;
+  gap: 8px;
+  position: relative;
+  z-index: 3;
+  min-height: 220px;
+}
+
+/* Oversized dynamic display name — the studio's signature gesture. Sits directly
+   beneath the portrait. */
+.profile-card[data-collection="creative"] .card-name {
+  font-family: var(--cr-sans);
+  font-size: clamp(2.4rem, 7vw, 3.4rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--cr-ink);
+  margin-top: 14px;
+  margin-bottom: 12px;
+  text-wrap: balance;
+}
+/* An accent slash under the first word's energy — bold, geometric. */
+.profile-card[data-collection="creative"] .card-name::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 8px;
+  background: var(--card-accent);
+  margin-top: 14px;
+}
+
+.profile-card[data-collection="creative"] .card-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--card-accent-2);
+  margin-bottom: 4px;
+}
+
+.profile-card[data-collection="creative"] .card-company {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--cr-ink);
+  opacity: 0.78;
+  margin-bottom: 28px;
+}
+
+/* Contacts: bold top rule, structured. */
+.profile-card[data-collection="creative"] .card-contact {
+  border-top: 3px solid var(--cr-ink);
+  padding-top: 18px;
+  gap: 11px;
+}
+.profile-card[data-collection="creative"] .contact-item {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cr-ink);
+}
+.profile-card[data-collection="creative"] .contact-item i {
+  color: var(--card-accent);
+}
+
+/* Social: filled bold squares, accent on hover. */
+.profile-card[data-collection="creative"] .card-social {
+  margin-top: 22px;
+  gap: 10px;
+}
+.profile-card[data-collection="creative"] .social-item {
+  width: 42px;
+  height: 42px;
+  border-radius: 3px;
+  background: transparent;
+  border: 2px solid var(--cr-ink);
+  color: var(--cr-ink);
+  font-size: 1.1rem;
+  transition: background var(--transition-fast), color var(--transition-fast),
+              transform var(--transition-fast);
+}
+.profile-card[data-collection="creative"] .social-item:hover {
+  background: var(--card-accent);
+  border-color: var(--card-accent);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* ---- Center alignment: portrait banner, content centered below -------------- */
+.profile-card[data-collection="creative"][data-alignment="center"] .card-header {
+  display: block;
+  text-align: center;
+}
+.profile-card[data-collection="creative"][data-alignment="center"] .card-avatar {
+  margin: 28px auto 0;
+  top: auto; right: auto;
+  box-shadow: -8px 8px 0 var(--card-accent-2);
+}
+.profile-card[data-collection="creative"][data-alignment="center"] .card-body {
+  text-align: center;
+  align-items: center;
+}
+
+/* ---- Responsive portrait safety (carried from prior hardening) -------------- */
+/* Compact: shrink the portrait; it remains in flow above the name. */
+.profile-card[data-collection="creative"][data-size="compact"] .card-avatar {
+  width: 124px;
+  height: 154px;
+  margin: 22px 0 0 26px;
+}
+
+/* Horizontal: base rule sets position:static in a side column; keep the portrait
+   in flow at the top with the name following beneath it. */
+.profile-card[data-collection="creative"][data-orientation="horizontal"] .card-avatar {
+  position: relative;
+  width: 128px;
+  height: 160px;
+  top: auto; right: auto;
+  margin: 28px 0 0 28px;
+  box-shadow: -8px 8px 0 var(--card-accent-2);
+}

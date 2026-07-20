@@ -1,0 +1,218 @@
+/* ============================================================================
+   COLLECTION: Luxury (id: "luxury")
+   ----------------------------------------------------------------------------
+   Bespoke luxury branding — matte layered surfaces, soft metallic gold framing,
+   embossed borders, gold corner accents, and a floating framed portrait with real
+   depth (Design Bible §7 softer radii; §21 light reflections / subtle reflections).
+   Restrained: a quiet light sweep, never sparkle (Design Bible §10–§12, no flash).
+
+   Art-direction layer (ARCHITECTURE §18) on top of css/cards/base.css. Surface
+   treatment from css/themes/*; structure from css/templates/*. Motion via the
+   "luxury-shine" pack (light sweep, luxury glow, premium reveal, subtle breathing).
+   ============================================================================ */
+
+.profile-card[data-collection="luxury"] {
+  --card-radius: 16px;                  /* softer radii — Design Bible §7 */
+  --card-accent: var(--card-accent, #b08a4f);
+  --card-accent-2: var(--card-accent-2, #e7c989);
+  --lux-gold: #c9a35b;
+  --lux-gold-soft: rgba(201, 163, 91, 0.32);
+  --lux-ink: #efe7d8;
+  --lux-ink-soft: #c9bfae;
+
+  /* Layered matte: a deep charcoal field over a faint warm radial. */
+  background:
+    radial-gradient(130% 120% at 50% -10%, #2a2620 0%, transparent 55%),
+    linear-gradient(158deg, #1b1814 0%, #14110d 58%, #0d0b08 100%);
+  color: var(--lux-ink);
+  border: 1px solid rgba(201, 163, 91, 0.22);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);   /* soft top light = embossed feel */
+  font-family: Georgia, 'Times New Roman', serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft metallic gold frame inset from the edge (embossed luxury border). */
+.profile-card[data-collection="luxury"]::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid var(--lux-gold-soft);
+  border-radius: calc(var(--card-radius) - 6px);
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+/* Matte surface sheen — a slow, very soft light reflection (gated by the pack). */
+.profile-card[data-collection="luxury"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg, transparent 36%, rgba(231, 201, 137, 0.10) 50%, transparent 64%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gold corner accents — four fine L-shaped marks (subtle, never flashy). */
+.profile-card[data-collection="luxury"] .card-header {
+  height: 0;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+.profile-card[data-collection="luxury"] .card-header::before,
+.profile-card[data-collection="luxury"] .card-header::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--lux-gold);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.profile-card[data-collection="luxury"] .card-header::before {
+  top: 26px; left: 26px;
+  border-right: none; border-bottom: none;
+}
+.profile-card[data-collection="luxury"] .card-header::after {
+  top: 26px; right: 26px;
+  border-left: none; border-bottom: none;
+}
+
+/* Floating framed portrait — circular, elegant gold border, layered depth.
+   Positioned absolutely (out of flow) so it never pushes into — or overlaps — the
+   name; the body's top padding clears its 132px height + top offset. */
+.profile-card[data-collection="luxury"] .card-avatar {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  border: 3px solid var(--lux-gold);
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.55),
+    0 0 0 6px rgba(201, 163, 91, 0.10);   /* halo = premium depth */
+  position: absolute;
+  z-index: 3;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+.profile-card[data-collection="luxury"]:hover .card-avatar {
+  transform: translateX(-50%) translateY(-4px);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(201, 163, 91, 0.16);
+}
+
+.profile-card[data-collection="luxury"] .card-body {
+  padding: 178px 44px 40px;            /* clear the floating avatar (28px + 132px + breathing room) */
+  gap: 6px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Elegant serif display typography, centered like an engraved nameplate. */
+.profile-card[data-collection="luxury"] .card-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 5.5vw, 2.7rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: #f6efe2;
+  margin-bottom: 10px;
+}
+
+/* Small uppercase kicker in restrained gold, with a fine rule either side. */
+.profile-card[data-collection="luxury"] .card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--card-accent);
+  margin-bottom: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.profile-card[data-collection="luxury"] .card-title::before,
+.profile-card[data-collection="luxury"] .card-title::after {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--lux-gold-soft);
+}
+
+.profile-card[data-collection="luxury"] .card-company {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--lux-ink-soft);
+  margin-bottom: 28px;
+}
+
+/* Refined hairline divider in gold-tinted ink, centered. */
+.profile-card[data-collection="luxury"] .card-contact {
+  border-top: 1px solid var(--lux-gold-soft);
+  padding-top: 22px;
+  gap: 10px;
+  align-items: center;
+}
+.profile-card[data-collection="luxury"] .contact-item {
+  font-size: 0.9rem;
+  color: var(--lux-ink);
+  letter-spacing: 0.02em;
+}
+.profile-card[data-collection="luxury"] .contact-item i {
+  color: var(--card-accent);
+  opacity: 0.9;
+}
+
+/* Square, bordered social tiles — quiet, centered. */
+.profile-card[data-collection="luxury"] .card-social {
+  margin-top: 22px;
+  gap: 10px;
+  justify-content: center;
+}
+.profile-card[data-collection="luxury"] .social-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--lux-gold-soft);
+  color: var(--lux-ink);
+  font-size: 1.05rem;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+.profile-card[data-collection="luxury"] .social-item:hover {
+  background: var(--card-accent);
+  border-color: var(--card-accent);
+  color: #14110d;
+}
+
+/* Center alignment: luxury is already centered; nudge avatar. */
+.profile-card[data-collection="luxury"][data-alignment="center"] .card-body {
+  text-align: center;
+}
+.profile-card[data-collection="luxury"][data-alignment="center"] .card-avatar {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ---- Responsive portrait safety (Phase 2E.2) -------------------------------
+   Luxury floats a circular framed portrait above the name (relative positioning).
+   In horizontal orientation the base rule makes the avatar static, so its translateX
+   must be cleared and the large vertical body padding reduced to fit the short row. */
+.profile-card[data-collection="luxury"][data-orientation="horizontal"] .card-avatar {
+  position: static;
+  transform: none;
+  top: auto;
+  left: auto;
+  margin: 24px auto 0;
+}
+.profile-card[data-collection="luxury"][data-orientation="horizontal"] .card-body {
+  padding: 28px 32px;
+  justify-content: center;
+}

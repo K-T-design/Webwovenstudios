@@ -1,0 +1,155 @@
+/* ============================================================================
+   COLLECTION: Tech (id: "tech")
+   ----------------------------------------------------------------------------
+   Precision and future — sharp spacing, neon accents, subtle glows, orbital detail,
+   clean geometry (Design Bible §17: Precision Grid). Built for AI, SaaS, dev tools.
+   Orbital detail is a static ring with a glowing node (breathe/glow) — NOT a
+   continuous spin (Design Bible §11 forbids continuous rotation).
+
+   Art-direction layer (ARCHITECTURE §18) on top of css/cards/base.css. Motion pack:
+   "tech-pulse" (soft glow pulse, faint grid settle, orbital glow breathe).
+   ============================================================================ */
+
+.profile-card[data-collection="tech"] {
+  --card-radius: 4px;                   /* crisp geometry */
+  --card-accent: var(--card-accent, #13f1c6);
+  --card-accent-2: var(--card-accent-2, #0ea5e9);
+
+  background: #070b12;
+  color: #e6f7f4;
+  border: 1px solid rgba(19, 241, 198, 0.22);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+}
+
+/* Precision grid — faint engineering lattice (static; settles via pack). */
+.profile-card[data-collection="tech"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(19, 241, 198, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(19, 241, 198, 0.06) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Orbital detail — a static ring with a glowing node; the node breathes (no spin). */
+.profile-card[data-collection="tech"]::after {
+  content: "";
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 64px;
+  height: 64px;
+  border: 1px dashed rgba(19, 241, 198, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: 0 0 18px rgba(19, 241, 198, 0.25);
+}
+
+.profile-card[data-collection="tech"] .card-header {
+  height: 150px;
+  background: linear-gradient(135deg, #0d1722, #0a1118);
+  border-bottom: 1px solid rgba(19, 241, 198, 0.16);
+  position: relative;
+  z-index: 1;
+}
+
+/* Avatar: angular, neon-ringed, with a soft glow. */
+.profile-card[data-collection="tech"] .card-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 6px;
+  border: 2px solid var(--card-accent);
+  box-shadow: 0 0 22px rgba(19, 241, 198, 0.4), 0 14px 30px rgba(0, 0, 0, 0.45);
+  bottom: -62px;
+  left: 32px;
+  z-index: 3;
+}
+
+.profile-card[data-collection="tech"] .card-body {
+  padding: 82px 34px 34px;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-card[data-collection="tech"] .card-name {
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  font-size: clamp(1.9rem, 5vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  color: #f2fffd;
+  margin-bottom: 8px;
+}
+
+/* Monospace kicker with neon glow. */
+.profile-card[data-collection="tech"] .card-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--card-accent);
+  text-shadow: 0 0 12px rgba(19, 241, 198, 0.6);
+  margin-bottom: 6px;
+}
+
+.profile-card[data-collection="tech"] .card-company {
+  font-size: 0.96rem;
+  color: #9fc3bd;
+  margin-bottom: 24px;
+}
+
+/* Precise hairline divider with a corner notch feel. */
+.profile-card[data-collection="tech"] .card-contact {
+  border-top: 1px solid rgba(19, 241, 198, 0.2);
+  padding-top: 20px;
+  gap: 11px;
+}
+
+.profile-card[data-collection="tech"] .contact-item {
+  font-size: 0.88rem;
+  color: #cfe9e4;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.profile-card[data-collection="tech"] .contact-item i {
+  color: var(--card-accent);
+}
+
+/* Square neon social tiles. */
+.profile-card[data-collection="tech"] .card-social {
+  margin-top: 22px;
+  gap: 10px;
+}
+
+.profile-card[data-collection="tech"] .social-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: transparent;
+  border: 1px solid rgba(19, 241, 198, 0.3);
+  color: #cfe9e4;
+  font-size: 1.05rem;
+}
+
+.profile-card[data-collection="tech"] .social-item:hover {
+  background: var(--card-accent);
+  border-color: var(--card-accent);
+  color: #070b12;
+  box-shadow: 0 0 18px rgba(19, 241, 198, 0.6);
+}
+
+.profile-card[data-collection="tech"][data-alignment="center"] .card-body {
+  text-align: center;
+}
+.profile-card[data-collection="tech"][data-alignment="center"] .card-avatar {
+  left: 50%;
+  transform: translateX(-50%);
+}

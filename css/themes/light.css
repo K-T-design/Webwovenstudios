@@ -1,0 +1,9 @@
+/* Theme: Light — default surface treatment.
+   A Theme modifies appearance WITHOUT changing layout or art direction (ARCHITECTURE §19).
+   Light is the base; it re-declares the neutral text-muted tokens for explicitness. */
+.profile-card[data-theme="light"] {
+  --card-bg: #ffffff;
+  --card-text: #1a1a1a;
+  --card-text-muted: #666666;
+  --card-surface: #f8f9fa;
+}

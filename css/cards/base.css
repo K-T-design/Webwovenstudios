@@ -1,0 +1,232 @@
+/* ============================================================================
+   BASE CARD — the shared card skeleton (WebWoven Studios "Signature" collection)
+   ----------------------------------------------------------------------------
+   This file is the foundation every Collection, Theme, and Template builds on.
+   It defines the card STRUCTURE and base appearance only. Collection art-direction,
+   Theme surface treatment, and Template layout live in their own partials and are
+   imported by preview.css. No hard-coded collection/theme-specific values belong here
+   beyond the default token mappings already declared in variables.css.
+
+   Phase 2B.1 — Signature refinement (quality benchmark). Identity preserved
+   (orange/red gradient, 20px radius, light/dark/glass). Improvements follow the
+   Design Bible: consistent spacing scale (8/12/16/24/32/48), shadow levels (§8),
+   glass system (§9), icon system (§13), premium details (§21).
+
+   This is the first registered Collection's base (id: 'signature'). Future Collections
+   add css/collections/<id>.css on top of this base; they never edit it.
+   ============================================================================ */
+
+/* Profile Card Container */
+.preview-card-container {
+  perspective: 1000px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  background: var(--card-bg);
+  color: var(--card-text);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--card-border, rgba(0, 0, 0, 0.06));
+  isolation: isolate; /* contain decorative layers / blend modes */
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover, 0 24px 48px rgba(0, 0, 0, 0.14));
+}
+
+/* Decorative accent — a thin premium hairline under the header (Design Bible §21).
+   Sits above content; pointer-transparent; respects reduced motion. */
+.profile-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 140px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--card-accent), transparent);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Card Elements */
+.card-header {
+  background: linear-gradient(135deg, var(--card-accent), var(--brand-secondary));
+  height: 140px;
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.card-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  border: 5px solid var(--card-bg);
+  background: var(--card-surface);
+  position: absolute;
+  bottom: -60px;
+  left: 32px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  z-index: 3;
+  flex-shrink: 0;            /* never compress inside horizontal flex row */
+  max-width: 100%;           /* guard against small-card overflow */
+}
+
+.card-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;         /* every uploaded aspect ratio crops cleanly, no distortion */
+  transition: transform var(--transition-slow);
+}
+
+.profile-card:hover .card-avatar {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card:hover .card-avatar img {
+  transform: scale(1.04);
+}
+
+.card-body {
+  padding: 80px 32px 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-name {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--card-text);
+}
+
+.card-title {
+  font-size: 1.05rem;
+  color: var(--card-accent);
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+}
+
+.card-company {
+  font-size: 0.92rem;
+  color: var(--card-text-muted);
+  margin-bottom: 24px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.card-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--card-divider, rgba(0, 0, 0, 0.06));
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: var(--card-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.contact-item:hover {
+  color: var(--card-accent);
+  transform: translateX(2px);
+}
+
+.contact-item i {
+  color: var(--card-accent);
+  width: 20px;
+  font-size: 1.05rem;
+  text-align: center;
+  font-style: normal;
+  opacity: 0.9;
+}
+
+.card-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.social-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--card-surface);
+  color: var(--card-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast),
+              transform var(--transition-fast), box-shadow var(--transition-fast);
+  border: 1px solid var(--card-divider, rgba(0, 0, 0, 0.04));
+  font-size: 1.15rem;
+}
+
+.social-item:hover {
+  background: var(--card-accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Email Preview Card */
+.email-preview-card {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
+  animation: fadeIn var(--transition-normal);
+}
+
+#emailPreviewContent {
+  border: 1px dashed var(--border-color);
+  padding: 20px;
+  background: #ffffff;
+  min-height: 100px;
+  overflow-x: auto;
+}
+
+#emailPreviewContent table {
+  margin: 0 auto;
+}
+
+/* Premium Placeholder Icon Styling */
+.placeholder-icon {
+  font-size: 3rem;
+  opacity: 0.18;
+  color: var(--card-text);
+}

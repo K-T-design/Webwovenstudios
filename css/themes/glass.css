@@ -1,0 +1,11 @@
+/* Theme: Glass — physical glassmorphism surface (Design Bible §9, ARCHITECTURE §19).
+   Soft blur, subtle transparency, very thin borders, realistic reflections. */
+.profile-card[data-theme="glass"] {
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-text: #1a1a1a;
+  --card-text-muted: #444444;
+  --card-surface: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

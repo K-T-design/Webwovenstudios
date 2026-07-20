@@ -1,0 +1,6 @@
+/* Template: Compact — smaller footprint (ARCHITECTURE §20). */
+.profile-card[data-template="compact"],
+.profile-card[data-size="compact"] {
+  max-width: 320px;
+  min-height: 450px;
+}

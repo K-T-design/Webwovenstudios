@@ -1,0 +1,24 @@
+/* ANIMATION PACK: minimal-fade — Almost still (Design Bible §11/§21).
+   A single gentle fade-in of the content. Restraint as the statement.
+   Gated by [data-animation-pack="minimal-fade"]. */
+
+[data-animation-pack="minimal-fade"] .card-body,
+[data-animation-pack="minimal-fade"] .card-avatar {
+  animation: min-fade 0.6s ease-out both;
+}
+
+[data-animation-pack="minimal-fade"] .card-avatar {
+  animation-delay: 0.08s;
+}
+
+@keyframes min-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animation-pack="minimal-fade"] .card-body,
+  [data-animation-pack="minimal-fade"] .card-avatar {
+    animation: none !important;
+  }
+}

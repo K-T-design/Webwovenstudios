@@ -1,0 +1,213 @@
+/* ============================================================================
+   COLLECTION: Hero (id: "hero")
+   ----------------------------------------------------------------------------
+   The portrait is the design. The user's image becomes a full-bleed, cinematic
+   background; name is the focal point, profession secondary, company tertiary,
+   contacts live in subtle floating glass panels (Design Bible §16: Hero / Full-height
+   / Background portrait; §21: vignette, grain, premium lighting, parallax).
+
+   Refinement pass (2E.1): stronger, layered cinematic overlays for guaranteed
+   readability; the portrait now blends into a soft gradient at the base so glass
+   panels feel embedded rather than pasted; deeper premium shadows; refined type
+   hierarchy. No added clutter.
+
+   Art-direction layer (ARCHITECTURE §18) on top of css/cards/base.css. Reads the
+   sanitized portrait via --card-photo (set by PreviewEngine). Motion pack: "hero-reveal".
+   ============================================================================ */
+
+.profile-card[data-collection="hero"] {
+  --card-radius: 16px;
+  --card-accent: var(--card-accent, #ffffff);
+  --card-accent-2: var(--card-accent-2, #ffd27d);
+
+  background: #0c0d12;
+  color: #f5f6fa;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  min-height: 540px;
+  position: relative;
+}
+
+/* Full-bleed portrait background + cinematic overlays (gradient, vignette, grain). */
+.profile-card[data-collection="hero"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-photo, none);
+  background-size: cover;
+  background-position: center 20%;
+  background-repeat: no-repeat;
+  transform: scale(1.05);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Multi-layer cinematic overlay: readability scrims + vignette + fine grain.
+   The portrait blends into a soft gradient at the base so glass panels sit inside
+   the composition rather than on top of it. */
+.profile-card[data-collection="hero"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    /* top scrim for the name */
+    linear-gradient(180deg, rgba(6, 7, 11, 0.62) 0%, rgba(6, 7, 11, 0.18) 28%, transparent 46%),
+    /* bottom scrim for contacts + portrait blend */
+    linear-gradient(0deg, rgba(6, 7, 11, 0.92) 0%, rgba(6, 7, 11, 0.55) 26%, transparent 52%),
+    /* mid contrast lift to seat text */
+    linear-gradient(180deg, transparent 40%, rgba(6, 7, 11, 0.30) 70%, rgba(6, 7, 11, 0.55) 100%),
+    /* vignette */
+    radial-gradient(125% 95% at 50% 38%, transparent 52%, rgba(0, 0, 0, 0.6) 100%),
+    /* fine grain */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.05'/%3E%3C/svg%3E");
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* The avatar is redundant when the portrait is the background — hide it for Hero. */
+.profile-card[data-collection="hero"] .card-avatar {
+  display: none;
+}
+
+/* No separate header band; the portrait IS the header. */
+.profile-card[data-collection="hero"] .card-header {
+  display: none;
+}
+
+.profile-card[data-collection="hero"] .card-body {
+  position: relative;
+  z-index: 2;
+  padding: 48px 42px 42px;
+  gap: 8px;
+  min-height: 540px;
+  justify-content: space-between;
+}
+
+/* Top masthead rule — the quiet "cover" signal that makes Hero read as flagship. */
+.profile-card[data-collection="hero"] .card-body::before {
+  content: "";
+  position: absolute;
+  top: 34px;
+  left: 42px;
+  right: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), transparent);
+  pointer-events: none;
+}
+
+/* Name — the poster focal point. Heaviest weight, largest size, commanding presence. */
+.profile-card[data-collection="hero"] .card-name {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.8rem, 8vw, 4.1rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+  color: #ffffff;
+  text-shadow: 0 2px 34px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.55);
+  margin-bottom: 14px;
+}
+
+/* Profession — secondary, a refined cover line with a drawn divider above it. */
+.profile-card[data-collection="hero"] .card-title {
+  position: relative;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--card-accent-2, #ffd27d);
+  padding-top: 20px;
+  margin-bottom: 6px;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.profile-card[data-collection="hero"] .card-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 2px;
+  background: var(--card-accent-2, #ffd27d);
+  box-shadow: 0 0 14px rgba(255, 210, 125, 0.55);
+}
+
+/* Company — tertiary, muted, with a soft glow for separation. */
+.profile-card[data-collection="hero"] .card-company {
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: rgba(245, 246, 250, 0.88);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+  margin-bottom: 0;
+}
+
+/* Contacts — subtle floating glass panels with deeper premium depth. */
+.profile-card[data-collection="hero"] .card-contact {
+  border-top: none;
+  padding-top: 0;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.profile-card[data-collection="hero"] .contact-item {
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  color: #f5f6fa;
+  border-radius: 12px;
+  padding: 9px 15px;
+  font-size: 0.88rem;
+  width: fit-content;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-card[data-collection="hero"] .contact-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.36);
+}
+
+.profile-card[data-collection="hero"] .contact-item i {
+  color: var(--card-accent-2, #ffd27d);
+}
+
+/* Socials — glass pills. */
+.profile-card[data-collection="hero"] .card-social {
+  margin-top: 18px;
+  gap: 10px;
+}
+
+.profile-card[data-collection="hero"] .social-item {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5f6fa;
+  font-size: 1.1rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.profile-card[data-collection="hero"] .social-item:hover {
+  background: #fff;
+  color: #0c0d12;
+  transform: translateY(-3px);
+}
+
+/* Center alignment: keep readability; center the composition. */
+.profile-card[data-collection="hero"][data-alignment="center"] .card-body {
+  text-align: center;
+  align-items: center;
+}
+.profile-card[data-collection="hero"][data-alignment="center"] .card-title::before {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.profile-card[data-collection="hero"][data-alignment="center"] .contact-item {
+  margin: 0 auto;
+}

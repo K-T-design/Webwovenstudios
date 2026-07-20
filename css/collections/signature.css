@@ -1,0 +1,39 @@
+/* ============================================================================
+   COLLECTION: Signature (id: "signature")
+   ----------------------------------------------------------------------------
+   The WebWoven Studios flagship collection and the DEFAULT. This file is the
+   collection's ART-DIRECTION layer (ARCHITECTURE §18) — it declares the collection's
+   design tokens and any collection-specific styling. The shared card skeleton lives in
+   css/cards/base.css; surface treatment lives in css/themes/*; layout lives in
+   css/templates/*.
+
+   Because Signature IS the baseline application design, its tokens match the registry
+   (constants.js → COLLECTIONS[signature].tokens) and css/cards/base.css, so the rendered
+   output is identical to the pre-Phase-2B design aside from the approved refinements.
+
+   Phase 2B.1 refinements: added layered shadow/hover tokens and a subtle premium
+   divider variable so the base skeleton can express the quality benchmark uniformly.
+   Identity (orange/red gradient, 20px radius) preserved.
+
+   Future collections (editorial, executive, luxury, motion, tech, minimal, organic,
+   creative) add their own css/collections/<id>.css here without touching this file.
+   ============================================================================ */
+
+.profile-card[data-collection="signature"] {
+  /* Art-direction tokens (mirror registry; let user accentColor override --card-accent) */
+  --card-radius: 20px;
+  --card-accent-2: #e85d04;
+
+  /* Premium shadow levels (Design Bible §8) */
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 24px 48px rgba(0, 0, 0, 0.14);
+
+  /* Refined hairline dividers (Design Bible §21) */
+  --card-divider: rgba(0, 0, 0, 0.06);
+  --card-border: rgba(0, 0, 0, 0.06);
+}
+
+/* Signature header gradient uses the brand secondary (already in base.css). */
+.profile-card[data-collection="signature"] .card-header {
+  background: linear-gradient(135deg, var(--card-accent), var(--brand-secondary));
+}

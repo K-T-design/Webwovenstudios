@@ -1,0 +1,147 @@
+/* ============================================================================
+   COLLECTION: Motion (id: "motion")
+   ----------------------------------------------------------------------------
+   Movement as identity — floating gradients, aurora backgrounds, breathing layout,
+   liquid shapes, subtle depth (Design Bible §17: Aurora / Mesh Gradient / Animated
+   Shapes). Calm and elegant; motion communicates quality, never attention.
+
+   Art-direction layer (ARCHITECTURE §18) on top of css/cards/base.css. The animated
+   aurora field lives here (static end-state under reduced-motion via the pack +
+   the global reduced-motion backstop). Motion pack: "aurora-flow".
+   ============================================================================ */
+
+.profile-card[data-collection="motion"] {
+  --card-radius: 22px;
+  --card-accent: var(--card-accent, #6d5efc);
+  --card-accent-2: var(--card-accent-2, #22d3ee);
+
+  background: #0b0b18;
+  color: #eef0ff;
+  border: 1px solid rgba(109, 94, 252, 0.25);
+  box-shadow: 0 24px 60px rgba(34, 30, 80, 0.45);
+  overflow: hidden;
+}
+
+/* Aurora field — soft drifting mesh of accent color (transform/opacity only via pack). */
+.profile-card[data-collection="motion"]::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(38% 38% at 22% 28%, rgba(109, 94, 252, 0.55), transparent 70%),
+    radial-gradient(40% 40% at 78% 32%, rgba(34, 211, 238, 0.45), transparent 70%),
+    radial-gradient(46% 46% at 50% 82%, rgba(168, 85, 247, 0.40), transparent 72%);
+  filter: blur(18px);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Suppress the Signature gradient hairline. */
+.profile-card[data-collection="motion"]::after {
+  display: none;
+}
+
+.profile-card[data-collection="motion"] .card-header {
+  height: 150px;
+  background: linear-gradient(135deg, rgba(109, 94, 252, 0.55), rgba(34, 211, 238, 0.45));
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(6px);
+}
+
+/* Avatar: floating glass orb catching the aurora. */
+.profile-card[data-collection="motion"] .card-avatar {
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(109, 94, 252, 0.35);
+  bottom: -62px;
+  left: 34px;
+  z-index: 3;
+}
+
+.profile-card[data-collection="motion"] .card-body {
+  padding: 82px 34px 34px;
+  gap: 6px;
+  position: relative;
+  z-index: 2;
+}
+
+.profile-card[data-collection="motion"] .card-name {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2rem, 5.5vw, 2.7rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+/* Kicker with a soft glow. */
+.profile-card[data-collection="motion"] .card-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--card-accent-2);
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.55);
+  margin-bottom: 6px;
+}
+
+.profile-card[data-collection="motion"] .card-company {
+  font-size: 0.98rem;
+  color: #c7c9ff;
+  margin-bottom: 24px;
+}
+
+/* Soft glowing divider. */
+.profile-card[data-collection="motion"] .card-contact {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: 22px;
+  gap: 11px;
+}
+
+.profile-card[data-collection="motion"] .contact-item {
+  font-size: 0.9rem;
+  color: #d8daff;
+}
+
+.profile-card[data-collection="motion"] .contact-item i {
+  color: var(--card-accent-2);
+}
+
+/* Round glassy social chips with glow. */
+.profile-card[data-collection="motion"] .card-social {
+  margin-top: 22px;
+  gap: 10px;
+}
+
+.profile-card[data-collection="motion"] .social-item {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #eef0ff;
+  font-size: 1.1rem;
+  backdrop-filter: blur(6px);
+}
+
+.profile-card[data-collection="motion"] .social-item:hover {
+  background: var(--card-accent);
+  border-color: var(--card-accent);
+  color: #0b0b18;
+  box-shadow: 0 0 20px rgba(109, 94, 252, 0.6);
+}
+
+.profile-card[data-collection="motion"][data-alignment="center"] .card-body {
+  text-align: center;
+}
+.profile-card[data-collection="motion"][data-alignment="center"] .card-avatar {
+  left: 50%;
+  transform: translateX(-50%);
+}

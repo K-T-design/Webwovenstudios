@@ -189,6 +189,20 @@ textarea.form-control {
   color: var(--text-main);
 }
 
+/* Accessibility: consistent, visible keyboard focus for all interactive controls
+   (Design Bible §19). Only shows for keyboard users (:focus-visible), never on
+   mouse click. Respects the brand accent. */
+.btn:focus-visible,
+.option-card:focus-visible,
+.form-control:focus-visible,
+.studio-tile:focus-visible,
+.social-item:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
 /* Modals / Overlays */
 .modal-overlay {
   position: fixed;

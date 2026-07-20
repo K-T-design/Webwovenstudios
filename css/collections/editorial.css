@@ -1,0 +1,253 @@
+/* ============================================================================
+   COLLECTION: Editorial (id: "editorial") — REDESIGNED (Phase 2E.3)
+   ----------------------------------------------------------------------------
+   A premium magazine cover (Vogue / Kinfolk / Monocle / GQ / Wallpaper* / Forbes).
+   The portrait becomes a full-height cover photograph on the right; the left column
+   carries a masthead, an oversized serif headline, and disciplined publication
+   rules. Asymmetric, dramatic, confident whitespace — composed like a magazine
+   art director, not a business card.
+
+   Art-direction layer (ARCHITECTURE §18) on css/cards/base.css. Surface from
+   css/themes/*; structure from css/templates/*. Motion: the "editorial-reveal"
+   Animation Pack (headline reveal, divider draw, paper fade, image fade, light
+   sweep) — Design-Bible-approved only (§10–§12). Reduced-motion gated.
+   ============================================================================ */
+
+.profile-card[data-collection="editorial"] {
+  --card-radius: 2px;
+  --card-accent: var(--card-accent, #b3122b);     /* editorial crimson */
+  --ed-ink: #14110d;
+  --ed-ink-soft: #6b6359;
+  --ed-paper: #f6f2e9;                             /* warm print paper */
+  --ed-rule: rgba(20, 17, 13, 0.16);
+  --ed-serif: "Playfair Display", "Georgia", "Times New Roman", serif;
+  --ed-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  background: var(--ed-paper);
+  color: var(--ed-ink);
+  font-family: var(--ed-sans);
+  border: 1px solid var(--ed-rule);
+  box-shadow: 0 26px 60px rgba(20, 17, 13, 0.16);
+  overflow: hidden;
+}
+
+/* Subtle print grain (Design Bible §21). */
+.profile-card[data-collection="editorial"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Suppress the Signature gradient hairline. */
+.profile-card[data-collection="editorial"]::after { display: none; }
+
+/* The header is no longer a band — it's a static anchor so the portrait can span
+   the full card height as a cover photograph. */
+.profile-card[data-collection="editorial"] .card-header {
+  position: static;
+  height: auto;
+  background: transparent;
+  border: none;
+  z-index: 1;
+}
+
+/* ---- Portrait as a full-height cover photograph (right column) ------------- */
+.profile-card[data-collection="editorial"] .card-avatar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: auto;
+  bottom: auto;
+  width: 46%;
+  height: 100%;
+  border-radius: 0;
+  border: none;
+  background: #2a2620;
+  box-shadow: -28px 0 60px rgba(20, 17, 13, 0.28);   /* depth where it meets the page */
+  overflow: hidden;
+  z-index: 3;
+}
+.profile-card[data-collection="editorial"] .card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  filter: saturate(0.95) contrast(1.03);
+  transition: transform var(--transition-slow);
+}
+/* Soft inner scrim on the portrait's left edge for editorial depth. */
+.profile-card[data-collection="editorial"] .card-avatar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(20, 17, 13, 0.28), transparent 30%);
+  pointer-events: none;
+}
+.profile-card[data-collection="editorial"]:hover .card-avatar img {
+  transform: scale(1.05);
+}
+
+/* ---- Left editorial column ------------------------------------------------ */
+.profile-card[data-collection="editorial"] .card-body {
+  position: relative;
+  z-index: 2;
+  padding: 34px 34px 38px;
+  gap: 14px;
+  min-height: 100%;
+  justify-content: space-between;
+}
+
+/* Masthead rule + issue marker at the very top. */
+.profile-card[data-collection="editorial"] .card-body::before {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: 34px;
+  right: 34px;
+  height: 1px;
+  background: var(--ed-ink);
+  opacity: 0.85;
+}
+
+/* Oversized serif display name — the cover headline. */
+.profile-card[data-collection="editorial"] .card-name,
+.profile-card[data-collection="editorial"] .card-title,
+.profile-card[data-collection="editorial"] .card-company,
+.profile-card[data-collection="editorial"] .card-contact,
+.profile-card[data-collection="editorial"] .card-social {
+  max-width: 50%;                  /* never runs under the cover photograph */
+}
+
+.profile-card[data-collection="editorial"] .card-name {
+  font-family: var(--ed-serif);
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ed-ink);
+  margin-top: 26px;
+  text-wrap: balance;
+}
+
+/* Kicker: tracked caps with an issue marker — magazine "feature" line. */
+.profile-card[data-collection="editorial"] .card-title {
+  font-family: var(--ed-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--card-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.profile-card[data-collection="editorial"] .card-title::before {
+  content: "Issue Nº 04";
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--ed-ink-soft);
+  border: 1px solid var(--ed-rule);
+  padding: 3px 7px;
+}
+
+.profile-card[data-collection="editorial"] .card-company {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ed-ink-soft);
+  margin-bottom: 4px;
+}
+
+/* Contacts: fine publication rules, structured list. */
+.profile-card[data-collection="editorial"] .card-contact {
+  border-top: 1px solid var(--ed-ink);
+  padding-top: 16px;
+  gap: 9px;
+}
+.profile-card[data-collection="editorial"] .contact-item {
+  font-size: 0.84rem;
+  color: var(--ed-ink);
+  letter-spacing: 0.01em;
+}
+.profile-card[data-collection="editorial"] .contact-item i {
+  color: var(--card-accent);
+  opacity: 0.8;
+}
+
+.profile-card[data-collection="editorial"] .card-social {
+  margin-top: 20px;
+  gap: 8px;
+}
+.profile-card[data-collection="editorial"] .social-item {
+  width: 36px;
+  height: 36px;
+  border-radius: 0;
+  background: transparent;
+  border: 1px solid var(--ed-rule);
+  color: var(--ed-ink);
+  font-size: 0.95rem;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.profile-card[data-collection="editorial"] .social-item:hover {
+  background: var(--ed-ink);
+  color: var(--ed-paper);
+  border-color: var(--ed-ink);
+}
+
+/* Center alignment: portrait becomes a top banner, content centered below. */
+.profile-card[data-collection="editorial"][data-alignment="center"] .card-header {
+  display: block;
+}
+.profile-card[data-collection="editorial"][data-alignment="center"] .card-avatar {
+  position: static;
+  width: 100%;
+  height: 230px;
+  box-shadow: none;
+  margin-bottom: 4px;
+}
+.profile-card[data-collection="editorial"][data-alignment="center"] .card-body {
+  text-align: center;
+  align-items: center;
+}
+.profile-card[data-collection="editorial"][data-alignment="center"] .card-name,
+.profile-card[data-collection="editorial"][data-alignment="center"] .card-title,
+.profile-card[data-collection="editorial"][data-alignment="center"] .card-company,
+.profile-card[data-collection="editorial"][data-alignment="center"] .card-contact,
+.profile-card[data-collection="editorial"][data-alignment="center"] .card-social {
+  max-width: 100%;
+}
+
+/* ---- Responsive portrait safety (carried from prior hardening) ------------- */
+.profile-card[data-collection="editorial"][data-size="compact"] .card-avatar {
+  width: 42%;
+}
+.profile-card[data-collection="editorial"][data-size="compact"] .card-name,
+.profile-card[data-collection="editorial"][data-size="compact"] .card-title,
+.profile-card[data-collection="editorial"][data-size="compact"] .card-company,
+.profile-card[data-collection="editorial"][data-size="compact"] .card-contact,
+.profile-card[data-collection="editorial"][data-size="compact"] .card-social {
+  max-width: 52%;
+}
+
+/* Horizontal: keep the cover-photo column (full height, right side). */
+.profile-card[data-collection="editorial"][data-orientation="horizontal"] .card-avatar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: auto;
+  bottom: auto;
+  width: 40%;
+  height: 100%;
+}
+.profile-card[data-collection="editorial"][data-orientation="horizontal"] .card-name,
+.profile-card[data-collection="editorial"][data-orientation="horizontal"] .card-title,
+.profile-card[data-collection="editorial"][data-orientation="horizontal"] .card-company,
+.profile-card[data-collection="editorial"][data-orientation="horizontal"] .card-contact,
+.profile-card[data-collection="editorial"][data-orientation="horizontal"] .card-social {
+  max-width: 56%;
+}

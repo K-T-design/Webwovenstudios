@@ -1,0 +1,43 @@
+/* Template: Horizontal — side-by-side orientation override (ARCHITECTURE §20).
+   Orientation is expressed as a data attribute; this file maps it to flex-direction. */
+
+/* Base orientation axes (shared by all templates) */
+.profile-card[data-orientation="vertical"] {
+  flex-direction: column;
+}
+.profile-card[data-orientation="horizontal"] {
+  flex-direction: row;
+}
+
+/* Horizontal-specific element adjustments */
+.profile-card[data-orientation="horizontal"] .card-header {
+  height: auto;
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.profile-card[data-orientation="horizontal"] .card-avatar {
+  position: static;
+  margin: 32px;
+  width: 100px;
+  height: 100px;
+}
+
+.profile-card[data-orientation="horizontal"] .card-body {
+  padding: 32px;
+}
+
+/* Center alignment adjustments (apply across templates) */
+.profile-card[data-alignment="center"] .card-avatar {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.profile-card[data-alignment="center"] .card-body {
+  text-align: center;
+}
+.profile-card[data-alignment="center"] .card-contact {
+  align-items: center;
+}
+.profile-card[data-alignment="center"] .card-social {
+  justify-content: center;
+}
