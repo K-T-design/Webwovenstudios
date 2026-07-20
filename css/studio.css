@@ -9,23 +9,24 @@
 
 .step-subtitle {
   color: var(--text-muted);
-  font-size: 0.9rem;
-  margin: -12px 0 20px;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  margin: -16px 0 24px;
+  line-height: 1.5;
+  max-width: 56ch;
 }
 
 /* Studio grid: one premium tile per row for a curated, browsable feel. */
 .studio-grid {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .studio-tile {
   display: flex;
   flex-direction: column;
   text-align: left;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   background: var(--bg-surface);
   padding: 0;
@@ -38,8 +39,8 @@
 
 .studio-tile:hover {
   border-color: var(--tile-accent, var(--brand-primary));
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -16px rgba(26, 22, 20, 0.28);
+  transform: translateY(-3px);
 }
 
 .studio-tile:focus-visible {
@@ -49,14 +50,14 @@
 
 .studio-tile--active {
   border-color: var(--tile-accent, var(--brand-primary));
-  box-shadow: 0 0 0 1px var(--tile-accent, var(--brand-primary)), 0 10px 30px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 0 0 1px var(--tile-accent, var(--brand-primary)), 0 14px 34px -16px rgba(26, 22, 20, 0.3);
 }
 
 /* ----- Cover (CSS-generated preview thumbnail, no external assets) ----- */
 .studio-tile-cover {
   position: relative;
   display: block;
-  height: 132px;
+  height: 128px;
   background:
     radial-gradient(120% 120% at 80% -10%, var(--tile-accent-2, #e85d04) 0%, transparent 55%),
     linear-gradient(135deg, var(--tile-accent, #c92a2a), color-mix(in srgb, var(--tile-accent, #c92a2a) 60%, #1a1a1a));
@@ -128,7 +129,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 14px 16px 16px;
+  padding: 18px 20px 20px;
 }
 
 .studio-tile-head {
@@ -139,8 +140,10 @@
 }
 
 .studio-tile-name {
-  font-weight: 700;
-  font-size: 1.02rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.18rem;
+  letter-spacing: -0.01em;
   color: var(--text-main);
 }
 
