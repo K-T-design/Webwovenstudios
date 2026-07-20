@@ -1,0 +1,21 @@
+# WebWoven Studios — GitHub Pages build configuration
+# Pinning `url` explicitly lets jekyll-github-metadata skip the live
+# api.github.com/repos/<owner>/<repo>/pages call (which returned a transient
+# 503 during build). Theme + plugin match the default Pages build.
+
+title: WebWoven Studios
+description: Premium identity design studio — registry-driven profile-card Collections.
+url: "https://k-t-design.github.io"
+baseurl: "/Webwovenstudios"
+
+theme: jekyll-theme-primer
+
+plugins:
+  - jekyll-github-metadata
+
+# Keep the static SPA assets untouched by Jekyll's Markdown processing.
+exclude:
+  - node_modules
+  - package-lock.json
+  - package.json
+  - check_js_errors.js
