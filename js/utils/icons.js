@@ -1,5 +1,5 @@
 /**
- * BrandForge Studio — unified icon set
+ * WebWoven Studios — unified icon set
  * ----------------------------------------------------------------------------
  * One consistent icon family: outlined, 1.5px stroke, 20×20 viewBox, inherits
  * `currentColor`. No emoji, no mixed styles (Design Bible §13). Every icon is a

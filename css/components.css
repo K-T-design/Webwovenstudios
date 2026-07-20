@@ -125,7 +125,7 @@
 }
 
 .section-subtitle {
-  font-size: 0.78rem;
+  font-size: clamp(0.72rem, 0.68rem + 0.2vw, 0.82rem);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -174,8 +174,8 @@ textarea.form-control,
 /* ===== Selectable Option Grid (Collections / Themes / Templates / Export) ===== */
 .options-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: clamp(10px, 1.2vw, 14px);
 }
 
 .option-card {
@@ -216,7 +216,7 @@ textarea.form-control,
 
 .option-title {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
   margin-bottom: 4px;
   color: var(--text-main);
 }
@@ -317,7 +317,7 @@ button:focus-visible {
 }
 
 .modal-title {
-  font-size: 1.25rem;
+  font-size: clamp(1.15rem, 1rem + 0.7vw, 1.4rem);
   font-weight: 700;
 }
 
@@ -327,4 +327,109 @@ button:focus-visible {
   font-size: 1.5rem;
   cursor: pointer;
   color: var(--text-muted);
+}
+
+/* ===== Responsive hardening (production pass) =====
+   Grid items default to min-width:auto, which can blow out a track when a
+   label/value is long. Zeroing it lets the grid shrink fluidly instead of
+   forcing horizontal scroll. */
+.option-card,
+.studio-tile,
+.studio-tile-head,
+.step-navigation > * {
+  min-width: 0;
+}
+
+.studio-tile-name,
+.option-title,
+.option-desc {
+  overflow-wrap: break-word;
+}
+
+/* Social link rows: let the title wrap before the icon controls (never wrap) */
+.social-link-header {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.social-link-header > :last-child {
+  flex-shrink: 0;
+}
+
+/* Phones: the option grid is already fluid (auto-fit), so it collapses to a
+   single column naturally when space is tight — no hard breakpoint needed. */
+
+/* Touch devices: inputs at >=16px prevent the iOS focus-zoom jump while
+   preserving the refined desktop density. */
+@media (max-width: 600px) {
+  .form-control,
+  .field input,
+  .field textarea,
+  .field select {
+    font-size: 16px;
+  }
+}
+
+/* ===== Notifications / Toasts (responsive, token-based) =====
+   Centred with safe margins on small screens (never wider than the viewport,
+   so long messages can't trigger horizontal scroll); pinned top-right on
+   larger viewports. */
+.app-notification {
+  position: fixed;
+  top: var(--s-4);
+  left: var(--s-5);
+  right: var(--s-5);
+  margin: 0 auto;
+  width: fit-content;
+  max-width: calc(100% - 2 * var(--s-5));
+  background: var(--brand-primary);
+  color: #fff;
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow);
+  z-index: 10000;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-align: center;
+  animation: toastIn var(--transition-normal);
+}
+.app-notification.error { background: #d93025; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; }
+}
+@media (min-width: 600px) {
+  .app-notification {
+    left: auto;
+    right: var(--s-5);
+    margin: 0;
+    width: auto;
+    max-width: 380px;
+    text-align: left;
+  }
+}
+
+/* ===== Modals — comfortable and scrollable on every screen ===== */
+.modal-content {
+  max-height: calc(100vh - 2 * var(--s-6));
+  overflow-y: auto;
+}
+@media (max-width: 520px) {
+  .modal-content { width: 92%; padding: var(--s-5); }
+}
+
+/* ===== Reduced motion: calm, no transform/opacity animation ===== */
+@media (prefers-reduced-motion: reduce) {
+  .app-notification { animation: none; }
+  .btn:hover,
+  .studio-tile:hover,
+  .social-item:hover { transform: none; }
+}
+
+/* ===== Touch: hover lifts must not linger after a tap (Design Bible §19) ===== */
+@media (hover: none) {
+  .btn:hover,
+  .studio-tile:hover,
+  .social-item:hover,
+  .contact-item:hover { transform: none; }
 }

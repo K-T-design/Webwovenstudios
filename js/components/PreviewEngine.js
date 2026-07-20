@@ -1,6 +1,7 @@
 import { $, $$, sanitizeHTML, sanitizeURL, sanitizeImageURL } from '../utils/dom.js';
 import { appState } from '../config/state.js';
 import { SOCIAL_PLATFORMS, getCollectionTokens } from '../config/constants.js';
+import { cardIcon } from '../utils/cardIcons.js';
 
 export class PreviewEngine {
   constructor() {
@@ -85,14 +86,14 @@ export class PreviewEngine {
       const safeEmail = sanitizeURL(`mailto:${state.email}`);
       contactContainer.innerHTML += `
         <a href="${safeEmail}" class="contact-item">
-          <i>✉</i> <span>${sanitizeHTML(state.email)}</span>
+          ${cardIcon('email')} <span>${sanitizeHTML(state.email)}</span>
         </a>`;
     }
     if (state.phone) {
       const safePhone = sanitizeURL(`tel:${state.phone}`);
       contactContainer.innerHTML += `
         <a href="${safePhone}" class="contact-item">
-          <i>☏</i> <span>${sanitizeHTML(state.phone)}</span>
+          ${cardIcon('phone')} <span>${sanitizeHTML(state.phone)}</span>
         </a>`;
     }
 
@@ -106,8 +107,8 @@ export class PreviewEngine {
         if (!safeUrl) return; // skip unsafe URLs
         const platform = SOCIAL_PLATFORMS.find(p => p.id === link.platform) || SOCIAL_PLATFORMS.find(p => p.id === 'custom');
         socialContainer.innerHTML += `
-          <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="social-item" title="${sanitizeHTML(platform.name)}">
-            ${platform.icon}
+          <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="social-item" title="${sanitizeHTML(platform.name)}" aria-label="${sanitizeHTML(platform.name)}">
+            ${cardIcon(platform.icon)}
           </a>`;
       }
     });

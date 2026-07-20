@@ -294,7 +294,7 @@ class App {
     const cardEl = $('#previewCard');
     const state = appState.get();
     const html = generateStandaloneHTML(cardEl, state);
-    this.downloadFile(html, `${state.name.replace(/\s+/g, '_')}_ProfileCard.html`);
+    this.downloadFile(html, `${state.name.replace(/\s+/g, '_')}_WebWoven.html`);
     this.showNotification('✅ Standard HTML downloaded!');
   }
 
@@ -360,19 +360,8 @@ class App {
     
     const notification = document.createElement('div');
     notification.className = `app-notification ${type}`;
-    notification.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: ${type === 'success' ? 'var(--brand-primary)' : '#d93025'};
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 10000;
-      font-weight: 600;
-      animation: slideIn 0.3s ease;
-    `;
+    notification.setAttribute('role', 'status');
+    notification.setAttribute('aria-live', 'polite');
     notification.textContent = message;
     document.body.appendChild(notification);
     

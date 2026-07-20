@@ -186,7 +186,7 @@ export const generateStandaloneHTML = (cardElement, state) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHTML(state.name)} - Profile Card</title>
+  <title>${escapeHTML(state.name)} — Profile Card · WebWoven Studios</title>
   <style>${collectionCss}${BASE_CARD_CSS}
     .profile-card { --card-accent: ${accentColor}; }
   </style>

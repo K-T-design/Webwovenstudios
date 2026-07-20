@@ -1,7 +1,7 @@
 {
-  "name": "Profile Card Generator",
-  "short_name": "ProfileCard",
-  "description": "Design professional, premium digital profile cards and email signatures with live preview and one-click export.",
+  "name": "WebWoven Studios",
+  "short_name": "WebWoven",
+  "description": "WebWoven Studios — weave premium digital profile cards and email signatures with a live, state-driven studio and Gmail/Outlook-compatible export.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

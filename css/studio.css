@@ -9,7 +9,7 @@
 
 .step-subtitle {
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
   margin: -16px 0 24px;
   line-height: 1.5;
   max-width: 56ch;

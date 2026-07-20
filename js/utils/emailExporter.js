@@ -10,6 +10,7 @@
  */
 
 import { getCollection } from '../config/constants.js';
+import { emailIconImg } from '../utils/cardIcons.js';
 
 /**
  * Generate email-compatible HTML signature from profile data
@@ -317,11 +318,11 @@ function generateUniversalContactInfo(email, phone) {
   let contacts = [];
   
   if (email) {
-    contacts.push(`✉ ${email}`);
+    contacts.push(`${emailIconImg('email', 'Email')} ${email}`);
   }
   
   if (phone) {
-    contacts.push(`📱 ${phone}`);
+    contacts.push(`${emailIconImg('phone', 'Phone')} ${phone}`);
   }
   
   if (contacts.length === 0) return '';
@@ -359,37 +360,14 @@ function generateUniversalSocialLinks(socialLinks) {
 }
 
 /**
- * Get appropriate icon for social media platform
+ * Get an email-safe icon for a social platform.
+ * Renders the SAME canonical outlined glyphs used in the Live Preview / HTML
+ * Export, rasterized to a PNG (Gmail/Outlook strip <svg> and web fonts).
+ * Falls back to a text label if rasterization is unavailable.
  */
 function getSocialIcon(platform) {
-  const icons = {
-    'linkedin': '💼',
-    'twitter': '🐦',
-    'x': '🐦',
-    'facebook': '👍',
-    'instagram': '📷',
-    'tiktok': '🎵',
-    'youtube': '📺',
-    'github': '💻',
-    'gitlab': '🍼',
-    'behance': '🎨',
-    'dribbble': '🏀',
-    'medium': '📚',
-    'dev.to': '🛠️',
-    'discord': '🗨️',
-    'telegram': '✈️',
-    'whatsapp': '💬',
-    'snapchat': '👻',
-    'pinterest': '📌',
-    'reddit': '🤣',
-    'threads': '🧵',
-    'twitch': '🎮',
-    'stackoverflow': '☃️',
-    'website': '🌐',
-    'custom': '🔗'
-  };
-  
-  return icons[platform] || icons['custom'] || '🔗';
+  const label = String(platform || 'custom');
+  return emailIconImg(platform, label);
 }
 
 /**

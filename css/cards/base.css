@@ -35,6 +35,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  --card-avatar-size: 120px;
   border: 1px solid var(--card-border, rgba(0, 0, 0, 0.06));
   isolation: isolate; /* contain decorative layers / blend modes */
 }
@@ -51,7 +52,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 140px;
+  top: calc(var(--card-avatar-size) + 20px);
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--card-accent), transparent);
   opacity: 0.35;
@@ -62,19 +63,19 @@
 /* Card Elements */
 .card-header {
   background: linear-gradient(135deg, var(--card-accent), var(--brand-secondary));
-  height: 140px;
+  height: calc(var(--card-avatar-size) + 20px);
   position: relative;
   transition: all var(--transition-normal);
 }
 
 .card-avatar {
-  width: 120px;
-  height: 120px;
+  width: var(--card-avatar-size);
+  height: var(--card-avatar-size);
   border-radius: 20px;
   border: 5px solid var(--card-bg);
   background: var(--card-surface);
   position: absolute;
-  bottom: -60px;
+  bottom: calc(var(--card-avatar-size) / -2);
   left: 32px;
   overflow: hidden;
   display: flex;
@@ -105,7 +106,7 @@
 }
 
 .card-body {
-  padding: 80px 32px 32px;
+  padding: calc(var(--card-avatar-size) / 2 + 20px) 32px 32px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -113,7 +114,7 @@
 }
 
 .card-name {
-  font-size: 1.75rem;
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 1.85rem);
   font-weight: 800;
   margin-bottom: 6px;
   line-height: 1.1;
@@ -122,7 +123,7 @@
 }
 
 .card-title {
-  font-size: 1.05rem;
+  font-size: clamp(0.98rem, 0.85rem + 0.4vw, 1.12rem);
   color: var(--card-accent);
   font-weight: 700;
   margin-bottom: 4px;
@@ -130,7 +131,7 @@
 }
 
 .card-company {
-  font-size: 0.92rem;
+  font-size: clamp(0.86rem, 0.8rem + 0.25vw, 0.96rem);
   color: var(--card-text-muted);
   margin-bottom: 24px;
   font-weight: 500;
@@ -161,13 +162,21 @@
   transform: translateX(2px);
 }
 
-.contact-item i {
+.contact-item i,
+.card-ico {
   color: var(--card-accent);
   width: 20px;
-  font-size: 1.05rem;
-  text-align: center;
+  height: 20px;
+  flex-shrink: 0;
   font-style: normal;
-  opacity: 0.9;
+  opacity: 0.92;
+}
+
+/* Canonical card icon (inline SVG, shared with HTML Export). Sized to fill its
+   container; inherits color from the parent (accent on rest, white on hover). */
+.card-ico {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .card-social {
@@ -206,7 +215,7 @@
   max-width: 600px;
   background: white;
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: clamp(20px, 4vw, 32px);
   box-shadow: var(--card-shadow);
   border: 1px solid var(--border-color);
   animation: fadeIn var(--transition-normal);
@@ -229,4 +238,23 @@
   font-size: 3rem;
   opacity: 0.18;
   color: var(--card-text);
+}
+
+/* ===== Responsive card proportions =====
+   The avatar drives header height + body offset via --card-avatar-size, so the
+   whole card stays in premium proportion as the canvas grows or shrinks. */
+@media (max-width: 480px) {
+  .profile-card { --card-avatar-size: 104px; }
+}
+@media (min-width: 1200px) {
+  .profile-card { --card-avatar-size: 128px; }
+}
+
+/* Touch devices: a tap shouldn't leave the card (or its avatar) stuck in a
+   lifted/hover state. Hover is decorative here and must never be required
+   (Design Bible §19). */
+@media (hover: none) {
+  .profile-card:hover { transform: none; }
+  .profile-card:hover .card-avatar { transform: none; }
+  .profile-card:hover .card-avatar img { transform: none; }
 }
