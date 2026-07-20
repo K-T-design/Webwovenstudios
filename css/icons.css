@@ -1,0 +1,220 @@
+/* ============================================================================
+   ICONS & INTERACTION POLISH — BrandForge Studio
+   ----------------------------------------------------------------------------
+   - One consistent outlined icon family (svg.icon, currentColor, 20px)
+   - Prevents accidental text selection / text caret on application controls
+     (Design Bible §18: controls should feel like UI, not editable text)
+   - Refined native controls: select chevron, color picker, file input
+   - Consistent disabled / aria-disabled states
+   ============================================================================ */
+
+/* ----- Icon base ----- */
+svg.icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  color: inherit;            /* inherits currentColor from parent */
+}
+
+/* The <i> wrappers used in option cards / static markup become flex boxes
+   so the SVG sits cleanly above the title. Reset any inherited italic. */
+.option-card i,
+.studio-tile i,
+.step-dot i {
+  font-style: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+/* ----- Part 7: prevent text selection + caret on UI controls -----
+   Real text inputs are explicitly excluded so editing/copying still works. */
+.brand-logo,
+.brand-logo *,
+.app-header,
+.header-actions,
+.btn,
+.btn *,
+.nav-menu,
+.option-card,
+.studio-tile,
+.step-indicator,
+.step-dot,
+.step-navigation,
+.social-link-controls,
+.modal-close,
+.tab,
+[role="button"] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Show a text caret ONLY where the user genuinely edits text. */
+input,
+textarea,
+select,
+[contenteditable="true"],
+input::selection,
+textarea::selection {
+  caret-color: auto;
+}
+
+/* Everything else: never show the text caret on click. */
+.btn,
+.option-card,
+.studio-tile,
+.step-dot,
+[role="button"],
+.brand-logo {
+  caret-color: transparent;
+}
+
+/* ----- Part 5: refined native <select> (dropdown) ----- */
+select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  cursor: pointer;
+}
+select.form-control:focus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23c92a2a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
+/* ----- Refined color picker ----- */
+input[type="color"].form-control {
+  padding: 4px;
+  height: 50px;
+  cursor: pointer;
+  overflow: hidden;
+}
+input[type="color"].form-control::-webkit-color-swatch-wrapper { padding: 0; }
+input[type="color"].form-control::-webkit-color-swatch {
+  border: none;
+  border-radius: calc(var(--radius-md) - 4px);
+}
+input[type="color"].form-control::-moz-color-swatch {
+  border: none;
+  border-radius: calc(var(--radius-md) - 4px);
+}
+
+/* ----- Refined file input (keeps native button, tones the field) ----- */
+input[type="file"].form-control {
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+input[type="file"].form-control::file-selector-button {
+  margin-right: 12px;
+  padding: 7px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-alt);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+input[type="file"].form-control::file-selector-button:hover {
+  border-color: var(--text-main);
+  background: var(--bg-surface);
+}
+
+/* ----- Part 4/6: consistent disabled states ----- */
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none !important;
+}
+
+.option-card[aria-disabled="true"],
+.studio-option--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.55);
+  pointer-events: none;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.option-card[aria-disabled="true"]:hover,
+.studio-option--disabled:hover {
+  border-color: var(--border-color);
+  background-color: var(--bg-surface);
+}
+
+/* ----- Option card icon alignment (icon above title, centered) ----- */
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  text-align: left;
+}
+.option-card i {
+  margin-bottom: 2px;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+.option-card.selected i,
+.option-card:hover i {
+  color: var(--brand-primary);
+}
+.option-card .option-title { margin-bottom: 0; }
+
+/* ----- Icon-only action buttons (social toggle / remove) ----- */
+.btn-icon svg.icon { width: 18px; height: 18px; }
+.btn-icon.btn-danger:hover svg.icon { color: var(--brand-primary); }
+
+/* ----- Brand logo is now a link (Studio → homepage, Part 1) ----- */
+.brand-logo {
+  text-decoration: none;
+  color: var(--text-main);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: opacity var(--transition-fast);
+}
+.brand-logo:hover { opacity: 0.82; }
+.brand-logo:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: 3px;
+}
+
+/* ----- Step navigation: balanced, breathing (Part 2) ----- */
+.step-navigation {
+  gap: 12px;
+}
+.step-navigation .btn { min-width: 116px; justify-content: center; }
+
+/* ----- Sidebar scroll feels intentional, not cramped (Part 2) ----- */
+.sidebar { scrollbar-width: thin; scrollbar-color: var(--border-color) transparent; }
+.sidebar::-webkit-scrollbar { width: 8px; }
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 999px;
+}
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+
+/* ----- Form sections read as grouped panels (Part 2) ----- */
+.form-section {
+  padding-top: 4px;
+  border-top: 1px solid var(--border-color);
+  margin-top: 4px;
+}
+
+/* ----- Step indicator dots gain a quiet hover affordance ----- */
+.step-dot { cursor: default; }
+.step-dot.completed { cursor: default; }

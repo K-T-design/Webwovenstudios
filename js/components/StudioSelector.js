@@ -25,6 +25,7 @@
 import { $, $$, sanitizeHTML } from '../utils/dom.js';
 import { appState } from '../config/state.js';
 import { studio } from '../config/StudioManager.js';
+import { icon } from '../utils/icons.js';
 
 export class StudioSelector {
   constructor() {
@@ -105,7 +106,7 @@ export class StudioSelector {
         <div class="option-card studio-option ${compatible ? '' : 'studio-option--disabled'}"
              data-type="theme" data-value="${t.id}" role="button" tabindex="${compatible ? '0' : '-1'}"
              aria-disabled="${compatible ? 'false' : 'true'}">
-          <i>${this._themeGlyph(t.id)}</i>
+          <i>${icon(this._themeGlyph(t.id))}</i>
           <div class="option-title">${sanitizeHTML(t.name)}</div>
         </div>`;
     }).join('');
@@ -125,7 +126,7 @@ export class StudioSelector {
         <div class="option-card studio-option ${compatible ? '' : 'studio-option--disabled'}"
              data-type="template" data-value="${t.id}" role="button" tabindex="${compatible ? '0' : '-1'}"
              aria-disabled="${compatible ? 'false' : 'true'}">
-          <i>${this._templateGlyph(t.id)}</i>
+          <i>${icon(this._templateGlyph(t.id))}</i>
           <div class="option-title">${sanitizeHTML(t.name)}</div>
         </div>`;
     }).join('');
@@ -202,13 +203,13 @@ export class StudioSelector {
   /* ------------------------------------------------------------- Glyphs */
 
   _themeGlyph(id) {
-    return { light: '☀️', dark: '🌙', glass: '🪟', 'dark-glass': '🌌' }[id] || '◐';
+    return { light: 'theme-light', dark: 'theme-dark', glass: 'theme-glass', 'dark-glass': 'theme-dark-glass' }[id] || 'theme-light';
   }
 
   _templateGlyph(id) {
     return {
-      standard: '🔲', compact: '📱', large: '🖥️',
-      signature: '✉️', horizontal: '↔️'
-    }[id] || '▦';
+      standard: 'template-standard', compact: 'template-compact', large: 'template-large',
+      signature: 'template-signature', horizontal: 'template-horizontal'
+    }[id] || 'template-standard';
   }
 }

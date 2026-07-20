@@ -1,6 +1,7 @@
 import { $, $$, sanitizeHTML, sanitizeImageURL } from '../utils/dom.js';
 import { appState } from '../config/state.js';
 import { SOCIAL_PLATFORMS } from '../config/constants.js';
+import { icon } from '../utils/icons.js';
 
 export class MultiStepForm {
   constructor() {
@@ -141,11 +142,11 @@ export class MultiStepForm {
             ${SOCIAL_PLATFORMS.map(p => `<option value="${p.id}" ${p.id === link.platform ? 'selected' : ''}>${p.name}</option>`).join('')}
           </select>
           <div class="social-link-controls">
-            <button class="btn btn-icon btn-outline btn-toggle-link" data-index="${index}" title="${link.enabled ? 'Disable' : 'Enable'}">
-              ${link.enabled ? '👁️' : '👁️‍🗨️'}
+            <button class="btn btn-icon btn-outline btn-toggle-link" data-index="${index}" title="${link.enabled ? 'Disable' : 'Enable'}" aria-label="${link.enabled ? 'Disable link' : 'Enable link'}">
+              ${icon(link.enabled ? 'eye' : 'eye-off')}
             </button>
-            <button class="btn btn-icon btn-outline btn-remove-link btn-danger" data-index="${index}" title="Remove">
-              🗑️
+            <button class="btn btn-icon btn-outline btn-remove-link btn-danger" data-index="${index}" title="Remove" aria-label="Remove link">
+              ${icon('trash')}
             </button>
           </div>
         </div>
