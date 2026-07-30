@@ -155,7 +155,7 @@ export const COLLECTION_STYLES = {};
  * always reproducible exactly (ARCHITECTURE §8).
  */
 export const setBaseCardCss = (text) => {
-  if (typeof text === 'string' && text.trim()) baseCardCss = text;
+  if (typeof text === 'string' && text.trim()) BASE_CARD_CSS = text;
 };
 
 export const generateStandaloneHTML = (cardElement, state) => {

@@ -4,7 +4,7 @@ import { PreviewEngine } from './components/PreviewEngine.js';
 import { MultiStepForm } from './components/MultiStepForm.js';
 import { generateStandaloneHTML, COLLECTION_STYLES, setBaseCardCss } from './utils/export.js';
 import { BackendService } from './services/backend.js';
-import { generateEmailHTML } from './utils/emailExporter.js';
+import { generateEmailHTML } from './emailSignatureSystem.js';
 import { initAnimations } from './animations/AnimationEngine.js';
 import { studio } from './config/StudioManager.js';
 import { StudioSelector } from './components/StudioSelector.js';
@@ -22,7 +22,7 @@ class App {
 
     this.initHeaderActions();
     this.initExportActions();
-    this.initImageUpload();
+    // this.initImageUpload();  // Removed: consolidated in MultiStepForm
 
     // Compose the Signature export base CSS from the modular partials so the
     // export no longer duplicates base.css/signature.css/theme partials by hand
@@ -180,45 +180,6 @@ class App {
     });
   }
 
-  initImageUpload() {
-    $('#imageUpload')?.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        // Validate file type and size for security/performance
-        const MAX_SIZE = 5 * 1024 * 1024; // 5MB
-        if (!file.type.startsWith('image/')) {
-          this.showNotification('❌ Please select a valid image file.', 'error');
-          e.target.value = '';
-          return;
-        }
-        if (file.size > MAX_SIZE) {
-          this.showNotification('❌ Image must be smaller than 5MB.', 'error');
-          e.target.value = '';
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = async (event) => {
-          const base64Data = event.target.result;
-          // Sanitize the data URL scheme before storing
-          if (typeof base64Data === 'string' && base64Data.startsWith('data:image/')) {
-            appState.update({ imageUrl: base64Data });
-          }
-          
-          try {
-            const result = await BackendService.uploadImage(base64Data, file.name);
-            if (result.success && result.url) {
-              appState.update({ imageUrl: result.url });
-            }
-          } catch (error) {
-            console.warn('Image upload failed, using local preview.', error);
-          }
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  }
-
   initStep7Logic() {
     // Listen for export format changes
     document.addEventListener('click', (e) => {
@@ -239,6 +200,11 @@ class App {
 
     // Listen for email format changes
     $('#emailFormatSelect')?.addEventListener('change', () => {
+      this.updateEmailPreview();
+    });
+
+    // Listen for email art direction changes
+    $('#emailArtDirectionSelect')?.addEventListener('change', () => {
       this.updateEmailPreview();
     });
 
@@ -263,7 +229,15 @@ class App {
   updateEmailPreview() {
     const state = appState.get();
     const format = $('#emailFormatSelect')?.value || 'gmail';
-    const emailHtml = generateEmailHTML(state, format);
+    const artDirection = $('#emailArtDirectionSelect')?.value;
+    
+    // Create a temporary state for the email signature with the chosen art direction
+    const emailState = { ...state };
+    if (artDirection) {
+      emailState.collection = artDirection;
+    }
+    
+    const emailHtml = generateEmailHTML(emailState, format);
     
     const previewCard = $('#previewCard');
     const emailPreviewCard = $('#emailPreviewCard');
@@ -301,7 +275,14 @@ class App {
   downloadEmailHTML() {
     const state = appState.get();
     const format = $('#emailFormatSelect')?.value || 'gmail';
-    const html = generateEmailHTML(state, format);
+    const artDirection = $('#emailArtDirectionSelect')?.value;
+    
+    const emailState = { ...state };
+    if (artDirection) {
+      emailState.collection = artDirection;
+    }
+    
+    const html = generateEmailHTML(emailState, format);
     this.downloadFile(html, `${state.name.replace(/\s+/g, '_')}_EmailSignature.html`);
     this.showNotification('✅ Email signature downloaded!');
   }
@@ -316,7 +297,14 @@ class App {
   copyEmailHTML() {
     const state = appState.get();
     const format = $('#emailFormatSelect')?.value || 'gmail';
-    const html = generateEmailHTML(state, format);
+    const artDirection = $('#emailArtDirectionSelect')?.value;
+    
+    const emailState = { ...state };
+    if (artDirection) {
+      emailState.collection = artDirection;
+    }
+    
+    const html = generateEmailHTML(emailState, format);
     
     // For email, we try to copy as rich text/HTML if possible
     try {

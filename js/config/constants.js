@@ -1,18 +1,18 @@
 export const DEFAULT_PROFILE = {
   id: "",
-  name: "John Doe",
-  jobTitle: "Senior Software Engineer",
-  company: "Tech Solutions Inc.",
-  email: "john.doe@example.com",
-  phone: "+1 (555) 123-4567",
-  website: "https://johndoe.dev",
-  imageUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+  name: "Avery Sinclair",
+  jobTitle: "Creative Director",
+  company: "WebWoven Studios",
+  email: "avery@webwovenstudios.com",
+  phone: "+1 (555) 201-8563",
+  website: "https://webwovenstudios.com",
+  imageUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Avery+Sinclair",
   
   // Dynamic Social Links Array
   socialLinks: [
-    { platform: "linkedin", url: "https://linkedin.com/in/johndoe", enabled: true },
-    { platform: "twitter", url: "https://twitter.com/johndoe", enabled: true },
-    { platform: "github", url: "https://github.com/johndoe", enabled: true }
+    { platform: "linkedin", url: "https://linkedin.com/company/webwovenstudios", enabled: true },
+    { platform: "website", url: "https://webwovenstudios.com", enabled: true },
+    { platform: "github", url: "https://github.com/webwovenstudios", enabled: true }
   ],
   
   // Design defaults

@@ -63,10 +63,10 @@
        ============================================================ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" media="print" onload="this.media='all'">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
   <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
   </noscript>
 
   <link rel="stylesheet" href="css/main.css">
@@ -136,15 +136,15 @@
           <h2 class="step-title">Profile Basics</h2>
           <div class="form-group">
             <label class="form-label" for="name">Full Name</label>
-            <input type="text" id="name" class="form-control" placeholder="John Doe" autocomplete="name">
+            <input type="text" id="name" class="form-control" placeholder="Avery Sinclair" autocomplete="name">
           </div>
           <div class="form-group">
             <label class="form-label" for="jobTitle">Job Title</label>
-            <input type="text" id="jobTitle" class="form-control" placeholder="Senior Developer" autocomplete="organization-title">
+            <input type="text" id="jobTitle" class="form-control" placeholder="Creative Director" autocomplete="organization-title">
           </div>
           <div class="form-group">
             <label class="form-label" for="company">Company</label>
-            <input type="text" id="company" class="form-control" placeholder="Tech Corp" autocomplete="organization">
+            <input type="text" id="company" class="form-control" placeholder="WebWoven Studios" autocomplete="organization">
           </div>
         </div>
 
@@ -156,7 +156,7 @@
             <h3 class="section-subtitle">Basic Contact</h3>
             <div class="form-group">
               <label class="form-label" for="email">Email Address</label>
-              <input type="email" id="email" class="form-control" placeholder="john@example.com" autocomplete="email">
+            <input type="email" id="email" class="form-control" placeholder="avery@webwovenstudios.com" autocomplete="email">
             </div>
             <div class="form-group">
               <label class="form-label" for="phone">Phone Number</label>
@@ -182,12 +182,12 @@
             <label class="form-label" for="imageUpload">Upload Image</label>
             <input type="file" id="imageUpload" class="form-control" accept="image/*">
           </div>
-          <div class="form-group" style="text-align: center; margin: 10px 0;">
-            <span style="color: var(--text-muted); font-size: 0.85rem;">OR</span>
+          <div class="form-group form-group-divider">
+            <span class="form-divider-label">or</span>
           </div>
           <div class="form-group">
             <label class="form-label" for="imageUrl">Paste Image URL</label>
-            <input type="url" id="imageUrl" class="form-control" placeholder="https://example.com/image.jpg">
+            <input type="url" id="imageUrl" class="form-control" placeholder="https://images.example.com/portrait.jpg">
           </div>
         </div>
 
@@ -267,14 +267,14 @@
 
           <div class="form-group">
             <label class="form-label" for="accentColor">Accent Color</label>
-            <input type="color" id="accentColor" class="form-control" value="#c92a2a" style="height: 50px; padding: 4px;">
+            <input type="color" id="accentColor" class="form-control color-control" value="#c92a2a">
           </div>
         </div>
 
         <!-- Step 6: Review -->
         <div class="form-step" id="step6">
           <h2 class="step-title">Review & Finish</h2>
-          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">
+          <p class="step-copy">
             Your profile card is ready! Review the live preview on the right. If everything looks good, you can proceed to export your card for web or email.
           </p>
         </div>
@@ -286,12 +286,12 @@
           <div class="form-section">
             <h3 class="section-subtitle">Choose Export Format</h3>
             <div class="options-grid">
-              <div class="option-card selected" data-type="export-format" data-value="standard" role="button" tabindex="0">
+              <div class="option-card selected" data-type="export-format" data-value="standard" role="button" tabindex="0" aria-pressed="true">
                 <i><svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18"/></svg></i>
                 <div class="option-title">Standard HTML</div>
                 <small style="color: var(--text-muted); font-size: 0.8rem;">For websites & embedding</small>
               </div>
-              <div class="option-card" data-type="export-format" data-value="email" role="button" tabindex="0">
+              <div class="option-card" data-type="export-format" data-value="email" role="button" tabindex="0" aria-pressed="false">
                 <i><svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></i>
                 <div class="option-title">Email Signature</div>
                 <small style="color: var(--text-muted); font-size: 0.8rem;">Gmail, Outlook, etc.</small>
@@ -300,6 +300,18 @@
           </div>
 
           <div id="emailExportOptions" style="display: none;">
+            <div class="form-section">
+              <h3 class="section-subtitle">Email Art Direction</h3>
+              <select id="emailArtDirectionSelect" class="form-control">
+                <option value="signature">Signature</option>
+                <option value="gallery">Gallery</option>
+                <option value="chairman">Chairman</option>
+                <option value="monarch">Monarch</option>
+                <option value="canvas">Canvas</option>
+                <option value="aurora">Aurora</option>
+              </select>
+            </div>
+
             <div class="form-section">
               <h3 class="section-subtitle">Email Format</h3>
               <select id="emailFormatSelect" class="form-control">
@@ -310,15 +322,15 @@
             </div>
           </div>
 
-          <div class="form-group" style="margin-top: 24px;">
+          <div class="form-group export-actions">
             <button id="btnFinalExport" class="btn btn-primary btn-full" type="button">Generate & Download</button>
-            <button id="btnCopyExport" class="btn btn-outline btn-full" type="button" style="margin-top: 10px;"><svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg> Copy to Clipboard</button>
+            <button id="btnCopyExport" class="btn btn-outline btn-full" type="button"><svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg> Copy to Clipboard</button>
           </div>
         </div>
 
         <!-- Step Navigation Controls -->
         <div class="step-navigation">
-          <button id="btnPrev" class="btn btn-outline" type="button" style="visibility: hidden;">Back</button>
+          <button id="btnPrev" class="btn btn-outline" type="button">Back</button>
           <button id="btnNext" class="btn btn-primary" type="button">Next Step</button>
         </div>
       </aside>
@@ -331,13 +343,13 @@
           <div id="previewCard" class="profile-card" data-theme="light" data-size="standard" data-orientation="vertical" data-alignment="left">
             <div class="card-header">
               <div class="card-avatar">
-                <img id="cardAvatarImg" src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" alt="Profile Image" loading="eager" decoding="async">
+                <img id="cardAvatarImg" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Avery+Sinclair" alt="Profile Image" loading="eager" decoding="async">
               </div>
             </div>
             <div class="card-body">
-              <h1 id="cardName" class="card-name">John Doe</h1>
-              <div id="cardJobTitle" class="card-title">Senior Software Engineer</div>
-              <div id="cardCompany" class="card-company">Tech Solutions Inc.</div>
+              <h1 id="cardName" class="card-name">Avery Sinclair</h1>
+              <div id="cardJobTitle" class="card-title">Creative Director</div>
+              <div id="cardCompany" class="card-company">WebWoven Studios</div>
               
               <div id="cardContact" class="card-contact">
                 <!-- Injected via JS -->
@@ -351,10 +363,10 @@
           <!-- End Profile Card -->
 
           <!-- Email Signature Preview (Hidden by default) -->
-          <div id="emailPreviewCard" class="email-preview-card" style="display: none;">
+          <div id="emailPreviewCard" class="email-preview-card" hidden>
             <div id="emailPreviewContent"></div>
-            <div style="margin-top: 20px; padding: 15px; background: var(--bg-surface-alt); border-radius: var(--radius-md); font-size: 0.85rem; color: var(--text-muted);">
-              <strong>Note:</strong> This is a simplified preview of how your signature will look in email clients like Gmail and Outlook.
+            <div class="email-preview-note">
+              <strong>Preview:</strong> This reflects the same HTML used for copy and download, shown inside the Studio surface for quick review.
             </div>
           </div>
 

@@ -24,9 +24,10 @@
   --card-radius: 16px;
   --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 
-  /* Typography — Inter for body, Playfair Display for editorial display
+  /* Typography — Montserrat for all platform UI (high contrast, accessible)
+     Playfair Display for editorial display headers (maintains design hierarchy)
      (shared with the homepage so the Studio and marketing feel like one product) */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
   /* Sizing & Layout */

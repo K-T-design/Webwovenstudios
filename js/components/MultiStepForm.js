@@ -46,29 +46,6 @@ export class MultiStepForm {
       }
     });
 
-    // Image Upload (Method 1)
-    $('#imageUpload')?.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        // Validate file type and size
-        const MAX_SIZE = 5 * 1024 * 1024; // 5MB
-        if (!file.type.startsWith('image/') || file.size > MAX_SIZE) {
-          e.target.value = '';
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          const result = ev.target.result;
-          if (typeof result === 'string' && result.startsWith('data:image/')) {
-            appState.update({ imageUrl: result });
-          }
-          const urlInput = $('#imageUrl');
-          if (urlInput) urlInput.value = ''; // clear url input if file uploaded
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
     // Social Link Actions
     $('#btnAddSocial')?.addEventListener('click', () => {
       appState.addSocialLink();
